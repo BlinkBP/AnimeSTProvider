@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'C:\Users\Blink\Desktop\AnimeSTProvider\AnimeSTProvider.ui'
 #
-# Created: Sat Jul 11 20:38:06 2015
+# Created: Sun Jul 12 19:57:44 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -178,24 +178,24 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setSpacing(15)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.graphicsView_7 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.graphicsView_7.setObjectName("graphicsView_7")
-        self.verticalLayout_4.addWidget(self.graphicsView_7)
-        self.graphicsView_8 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.graphicsView_8.setObjectName("graphicsView_8")
-        self.verticalLayout_4.addWidget(self.graphicsView_8)
-        self.graphicsView_9 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.graphicsView_9.setObjectName("graphicsView_9")
-        self.verticalLayout_4.addWidget(self.graphicsView_9)
-        self.graphicsView_10 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.graphicsView_10.setObjectName("graphicsView_10")
-        self.verticalLayout_4.addWidget(self.graphicsView_10)
-        self.graphicsView_11 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.graphicsView_11.setObjectName("graphicsView_11")
-        self.verticalLayout_4.addWidget(self.graphicsView_11)
-        self.graphicsView_12 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.graphicsView_12.setObjectName("graphicsView_12")
-        self.verticalLayout_4.addWidget(self.graphicsView_12)
+        self.animeView0 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        self.animeView0.setObjectName("animeView0")
+        self.verticalLayout_4.addWidget(self.animeView0)
+        self.animeView1 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        self.animeView1.setObjectName("animeView1")
+        self.verticalLayout_4.addWidget(self.animeView1)
+        self.animeView2 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        self.animeView2.setObjectName("animeView2")
+        self.verticalLayout_4.addWidget(self.animeView2)
+        self.animeView3 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        self.animeView3.setObjectName("animeView3")
+        self.verticalLayout_4.addWidget(self.animeView3)
+        self.animeView4 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        self.animeView4.setObjectName("animeView4")
+        self.verticalLayout_4.addWidget(self.animeView4)
+        self.animeView5 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        self.animeView5.setObjectName("animeView5")
+        self.verticalLayout_4.addWidget(self.animeView5)
         self.gridLayoutWidget_2 = QtGui.QWidget(self.tab_2)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(370, 10, 681, 551))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")

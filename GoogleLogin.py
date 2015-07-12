@@ -1,6 +1,7 @@
 import httplib2
 import argparse
 import YouTubeProvider
+import __main__ as main
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -30,3 +31,4 @@ def json_log_in(json):
     login = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, http=credentials.authorize(httplib2.Http()))
 
     YouTubeProvider.login = login
+    main.window.statusBar().showMessage("Logged in!")

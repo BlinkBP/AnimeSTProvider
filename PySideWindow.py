@@ -1,5 +1,6 @@
 import PySide
-from PySide.QtGui import (QMainWindow, QMessageBox, QFileDialog, QInputDialog)
+from PySide.QtGui import *
+from PySide.QtCore import *
 from AnimeSTProviderUI import Ui_MainWindow
 import platform
 import GoogleLogin
@@ -10,12 +11,17 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        # Scenes
+        self.scenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
+		               QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
         # Menu
         self.actionOpen_HTML.triggered.connect(self.open_HTML)
         self.actionAbout.triggered.connect(self.show_about)
         self.actionLoad_JSON_auth_file.triggered.connect(self.log_in)
         # Buttons
         self.deleteAnimeBtn.clicked.connect(self.delete_anime)
+        self.addAnimeBtn.clicked.connect(self.add_anime)
+        self.searchYTBtn.clicked.connect(self.search)
 
     def open_HTML(self):
         fname, str = QFileDialog.getOpenFileName(self, 'Open file', '/home/Desktop', "Files (*.html)")
@@ -33,10 +39,15 @@ class Window(QMainWindow, Ui_MainWindow):
     def delete_anime(self):
         self.animeListWidget.takeItem(self.animeListWidget.currentRow())
 
-    def search(self):
-        # YouTubeProvider.youtube_search(self.listWidget_3.selectedItems()[0].text(), 5)
-        return
+    def add_anime(self):
+        title, ok = QInputDialog.getText(self, 'Add anime', 'Enter anime title:')
 
+        if ok:
+            self.animeListWidget.addItem(title)
+
+    def search(self):
+        YouTubeProvider.youtube_search(self.animeListWidget.selectedItems()[0].text(), 6)
+        
     def show_about(self):
         QMessageBox.about(self, "About AnimeSTProvider",
                           """<p>Copyright &copy; 2015 Jan Kominczyk.
