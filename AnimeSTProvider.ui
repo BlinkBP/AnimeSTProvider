@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -63,7 +63,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="listWidget"/>
+        <widget class="QListWidget" name="userPlaylistsList0"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
@@ -74,7 +74,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="addPlaylistBtn2">
+          <widget class="QPushButton" name="addPlaylistBtn0">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -93,7 +93,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="deletePlaylist">
+          <widget class="QPushButton" name="deletePlaylistBtn">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -330,15 +330,15 @@
      <widget class="QWidget" name="verticalLayoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>30</y>
-        <width>161</width>
-        <height>511</height>
+        <x>220</x>
+        <y>20</y>
+        <width>131</width>
+        <height>521</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="spacing">
-        <number>15</number>
+        <number>16</number>
        </property>
        <item>
         <widget class="QGraphicsView" name="animeView0"/>
@@ -377,7 +377,7 @@
         <number>25</number>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="animeLabel0">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>1</horstretch>
@@ -388,7 +388,7 @@
           <number>1</number>
          </property>
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -431,9 +431,9 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_10">
+        <widget class="QLabel" name="animeLabel1">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -441,9 +441,9 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_11">
+        <widget class="QLabel" name="animeLabel4">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -451,9 +451,9 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_12">
+        <widget class="QLabel" name="animeLabel2">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -461,9 +461,9 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="animeLabel3">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -484,7 +484,7 @@
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="label_14">
+        <widget class="QLabel" name="animeLabel5">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -492,7 +492,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -522,7 +522,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="listWidget_2"/>
+        <widget class="QListWidget" name="userPlaylistsList1"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
@@ -533,7 +533,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="addPlaylistBtn">
+          <widget class="QPushButton" name="addPlaylistBtn1">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
