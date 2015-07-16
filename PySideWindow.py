@@ -22,11 +22,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.deleteAnimeBtn.clicked.connect(self.delete_anime)
         self.addAnimeBtn.clicked.connect(self.add_anime)
         self.searchYTBtn.clicked.connect(self.search)
-        self.addPlaylistBtn0.clicked.connect(self.create_playlist)
-        self.addPlaylistBtn1.clicked.connect(self.create_playlist)
+        self.addPlaylistBtn.clicked.connect(self.create_playlist)
         self.deletePlaylistBtn.clicked.connect(self.delete_playlist)
+        self.loadPlaylistBtn.clicked.connect(self.load_playlist)
         #Variables
-        self.ids = []
+        self.playlistIds = []
+        self.currentPlaylistRow = 0
+        self.currentAnimeRow = 0
+        #Events
+        self.userPlaylistsList0.itemClicked.connect(self.on_playlist_row_changed)
+        self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
 
     def open_HTML(self):
         fname, str = QFileDialog.getOpenFileName(self, 'Open file', '/home/Desktop', "Files (*.html)")
@@ -41,11 +46,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.userPlaylistsList0.clear()
         self.userPlaylistsList1.clear()
 
-        titles, self.ids = YouTubeProvider.get_user_playlists()
+        titles, self.playlistIds = YouTubeProvider.get_user_playlists()
 
         for title in titles:
             self.userPlaylistsList0.addItem(title)
             self.userPlaylistsList1.addItem(title)
+
+    def load_playlist(self):
+        YouTubeProvider.load_playlist(self.playlistIds[self.currentPlaylistRow])
 
     def create_playlist(self):
         
@@ -58,10 +66,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def delete_playlist(self):
 
-        idIndex = self.userPlaylistsList0.row(self.userPlaylistsList0.selectedItems()[0])
-        YouTubeProvider.delete_playlist(self.ids[idIndex])
-        self.userPlaylistsList0.takeItem(idIndex)
-        self.userPlaylistsList1.takeItem(idIndex)
+        YouTubeProvider.delete_playlist(self.playlistIds[self.currentPlaylistRow])
+        self.userPlaylistsList0.takeItem(self.currentPlaylistRow)
+        self.userPlaylistsList1.takeItem(self.currentPlaylistRow)
 
     def log_in(self):
         json, str = QFileDialog.getOpenFileName(self, 'Open JSON file', '/home/Desktop', "Files (*.JSON)")
@@ -79,8 +86,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.animeListWidget.addItem(title)
 
     def search(self):
-        YouTubeProvider.youtube_search(self.animeListWidget.selectedItems()[0].text(), 6)
-        
+        YouTubeProvider.youtube_search(self.animeListWidget.item(self.currentAnimeRow).text(), 6)
+
     def show_about(self):
         QMessageBox.about(self, "About AnimeSTProvider",
                           """<p>Copyright &copy; 2015 Jan Kominczyk.
@@ -88,3 +95,9 @@ class Window(QMainWindow, Ui_MainWindow):
                                                                                      PySide.__version__,
                                                                                      PySide.QtCore.__version__, )
                           )
+
+    def on_playlist_row_changed(self, item):
+        currentPlaylistRow = self.userPlaylistsList0.row(item)
+
+    def on_anime_row_changed(self, item):
+        currentAnimeRow = self.animeListWidget.row(item)

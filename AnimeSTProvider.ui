@@ -66,6 +66,13 @@
         <widget class="QListWidget" name="userPlaylistsList0"/>
        </item>
        <item>
+        <widget class="QPushButton" name="loadPlaylistBtn">
+         <property name="text">
+          <string>Load playlist</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
          <property name="spacing">
           <number>3</number>
@@ -74,7 +81,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="addPlaylistBtn0">
+          <widget class="QPushButton" name="addPlaylistBtn">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -115,39 +122,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="verticalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>30</y>
-        <width>161</width>
-        <height>511</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>15</number>
-       </property>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView_3"/>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView_2"/>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView_4"/>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView_5"/>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView_6"/>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">
        <rect>
@@ -165,7 +139,7 @@
         <number>25</number>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="videoLabel0">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>1</horstretch>
@@ -176,7 +150,7 @@
           <number>1</number>
          </property>
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -184,44 +158,44 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="deleteFromPlaylistBtn1">
          <property name="text">
-          <string>PushButton</string>
+          <string>Delete from playlist</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QPushButton" name="pushButton_6">
+        <widget class="QPushButton" name="deleteFromPlaylistBtn3">
          <property name="text">
-          <string>PushButton</string>
+          <string>Delete from playlist</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="deleteFromPlaylistBtn2">
          <property name="text">
-          <string>PushButton</string>
+          <string>Delete from playlist</string>
          </property>
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QPushButton" name="pushButton_7">
+        <widget class="QPushButton" name="deleteFromPlaylistBtn4">
          <property name="text">
-          <string>PushButton</string>
+          <string>Delete from playlist</string>
          </property>
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QPushButton" name="pushButton_8">
+        <widget class="QPushButton" name="deleteFromPlaylistBtn5">
          <property name="text">
-          <string>PushButton</string>
+          <string>Delete from playlist</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="videoLabel1">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -229,9 +203,9 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="videoLabel4">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -239,9 +213,9 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="videoLabel2">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -249,9 +223,9 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="videoLabel3">
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -259,7 +233,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="deleteFromPlaylistBtn0">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -267,12 +241,12 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>PushButton</string>
+          <string>Delete from playlist</string>
          </property>
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="videoLabel5">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -280,7 +254,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Video Title</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -302,23 +276,56 @@
        <item>
         <widget class="QLabel" name="label_16">
          <property name="text">
-          <string>TextLabel</string>
+          <string>0/0</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_18">
+        <widget class="QPushButton" name="previousPageBtn0">
          <property name="text">
-          <string>PushButton</string>
+          <string>&lt;---</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_10">
+        <widget class="QPushButton" name="nextPageBtn0">
          <property name="text">
-          <string>PushButton</string>
+          <string>---&gt;</string>
          </property>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>20</y>
+        <width>131</width>
+        <height>521</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>16</number>
+       </property>
+       <item>
+        <widget class="QGraphicsView" name="videoView0"/>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="videoView1"/>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="videoView2"/>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="videoView3"/>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="videoView4"/>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="videoView5"/>
        </item>
       </layout>
      </widget>
@@ -396,37 +403,37 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_11">
+        <widget class="QPushButton" name="addToPlaylistBtn1">
          <property name="text">
-          <string>PushButton</string>
+          <string>Add to playlist</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QPushButton" name="pushButton_12">
+        <widget class="QPushButton" name="addToPlaylistBtn3">
          <property name="text">
-          <string>PushButton</string>
+          <string>Add to playlist</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_13">
+        <widget class="QPushButton" name="addToPlaylistBtn2">
          <property name="text">
-          <string>PushButton</string>
+          <string>Add to playlist</string>
          </property>
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QPushButton" name="pushButton_14">
+        <widget class="QPushButton" name="addToPlaylistBtn4">
          <property name="text">
-          <string>PushButton</string>
+          <string>Add to playlist</string>
          </property>
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QPushButton" name="pushButton_15">
+        <widget class="QPushButton" name="addToPlaylistBtn5">
          <property name="text">
-          <string>PushButton</string>
+          <string>Add to playlist</string>
          </property>
         </widget>
        </item>
@@ -471,7 +478,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_16">
+        <widget class="QPushButton" name="addToPlaylistBtn0">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -479,7 +486,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>PushButton</string>
+          <string>Add to playlist</string>
          </property>
         </widget>
        </item>
@@ -533,7 +540,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="addPlaylistBtn1">
+          <widget class="QPushButton" name="addPlaylistBtn_2">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -676,21 +683,21 @@
        <item>
         <widget class="QLabel" name="label_17">
          <property name="text">
-          <string>TextLabel</string>
+          <string>0/0</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_19">
+        <widget class="QPushButton" name="previousPageBtn1">
          <property name="text">
-          <string>PushButton</string>
+          <string>&lt;---</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_20">
+        <widget class="QPushButton" name="nextPageBtn1">
          <property name="text">
-          <string>PushButton</string>
+          <string>---&gt;</string>
          </property>
         </widget>
        </item>
