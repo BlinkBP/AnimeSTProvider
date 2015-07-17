@@ -57,6 +57,7 @@ def fill_labels(titles, tab):
 def youtube_search(keywords, results, addStr):
 
     if login != None:
+
         youtube = login
 
         searchResponse = youtube.search().list(
@@ -67,14 +68,18 @@ def youtube_search(keywords, results, addStr):
 
         titles = []
         thumbnails = []
+        ids = []
 
         for searchResult in searchResponse.get("items", []):
             if searchResult["id"]["kind"] == "youtube#video":
                 titles.append(searchResult["snippet"]["title"])
                 thumbnails.append(searchResult["snippet"]["thumbnails"]["medium"]["url"])
+                ids.append(searchResult["id"])
 
         fill_thumbnails(thumbnails, "anime")
         fill_labels(titles, "anime")
+
+        return ids
 
     else:
         
@@ -84,6 +89,7 @@ def youtube_search(keywords, results, addStr):
 def get_user_playlists():
 
     if login != None:
+
         youtube = login
 
         playlists = youtube.playlists().list(
@@ -107,6 +113,7 @@ def get_user_playlists():
 def load_playlist(id):
 
     if login != None:
+
         youtube = login
 
         titles = []
@@ -114,14 +121,14 @@ def load_playlist(id):
         ids = []
 
         playlist = youtube.playlistItems().list(
-            part="snippet",
+            part="snippet, id",
             playlistId=id
             ).execute()
 
         for video in playlist.get("items", []):
             titles.append(video["snippet"]["title"])
             thumbnails.append(video["snippet"]["thumbnails"]["medium"]["url"])
-            ids.append(video["snippet"]["resourceId"]["videoId"])
+            ids.append(video["id"])
 
         fill_thumbnails(thumbnails, "playlist")
         fill_labels(titles, "playlist")
@@ -135,6 +142,7 @@ def load_playlist(id):
 def create_playlist(name):
     
     if login != None:
+
         youtube = login
 
         youtube.playlists().insert(
@@ -156,6 +164,51 @@ def create_playlist(name):
 def delete_playlist(playlistId):
 
     if login != None:
+        youtube = login
+        youtube.playlists().delete(id=playlistId).execute()
+
+    else:
+        main.window.statusBar().showMessage("You are not logged in!")
+        print("You are not logged in!")
+
+def add_to_playlist(vidId, playId):
+    
+    if login != None:
+
+        youtube = login
+
+        struct = {
+            'snippet':{
+                'resourceId': vidId,
+                'playlistId': playId
+                }
+            }
+
+        youtube.playlistItems().insert(
+            part="snippet",
+            body=struct
+        ).execute()
+
+    else:
+        main.window.statusBar().showMessage("You are not logged in!")
+        print("You are not logged in!")
+
+def delete_from_playlist(Id):
+    
+    if login != None:
+
+        youtube = login
+
+        youtube.playlistItems().delete(id=Id).execute()
+
+    else:
+        main.window.statusBar().showMessage("You are not logged in!")
+        print("You are not logged in!")
+
+def delete_playlist(playlistId):
+
+    if login != None:
+
         youtube = login
         youtube.playlists().delete(id=playlistId).execute()
 

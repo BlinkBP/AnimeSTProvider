@@ -6,17 +6,15 @@
 
 AnimeSTProvider runs on **Python 3.4**.
 
-Actual version: *0.1.0*
+Actual version: *0.5.0*
 
 ### TODO List ###
 
--Adding videos to playlist
 -Showing videos on multiple pages (ability to move between pages)
--Ability to choose what to add to search term (Anime title + OP or ED)
 
 ### How do I get set up? ###
 
-You need *BeautifulSoup*, *PySide*, *Google API*, *Requests*, *PIL*.
+You need *BeautifulSoup*, *PySide*, *Google API*, *Requests*, *PIL*.  
 Run `__main__.py`.
 
 ### Contribution guidelines ###
