@@ -10,72 +10,71 @@ from PySide.QtGui import (QPixmap, QImage)
 login = None
 videos = []
 
-def fill_thumbnails(thumbnails, tab):
-
-    if tab == "anime":
-        views = [main.window.animeView0, main.window.animeView1, main.window.animeView2,
-                main.window.animeView3, main.window.animeView4, main.window.animeView5]
-    elif tab == "playlist":
-        views = [main.window.videoView0, main.window.videoView1, main.window.videoView2,
-                main.window.videoView3, main.window.videoView4, main.window.videoView5]
-
-    for i in range(0, len(thumbnails)):
-        views[i].setScene(main.window.scenes[i])
-        main.window.scenes[i].clear()
-        data = requests.get(thumbnails[i]).content
-        image = QImage()
-        image.loadFromData(data)
-        main.window.scenes[i].addPixmap(QPixmap(image))
-        views[i].fitInView(QRectF(0, 0, 320, 180), Qt.KeepAspectRatio)
-        main.window.scenes[i].update()
-
 def clear_list(tab):
 
     if tab == "anime":
-        labels = [main.window.animeLabel0, main.window.animeLabel1, main.window.animeLabel2,
-                 main.window.animeLabel3, main.window.animeLabel4, main.window.animeLabel5]
+        labels = main.window.animeLabels
+        for i in range(0, 6):
+            labels[i].setText("")
+            main.window.animeScenes[i].clear()
+            main.window.animeScenes[i].update()
     elif tab == "playlist":
-        labels = [main.window.videoLabel0, main.window.videoLabel1, main.window.videoLabel2,
-                main.window.videoLabel3, main.window.videoLabel4, main.window.videoLabel5]
+        labels = main.window.videoLabels
+        for i in range(0, 6):
+            labels[i].setText("")
+            main.window.videoScenes[i].clear()
+            main.window.videoScenes[i].update()
 
-    for i in range(0, 6):
-        labels[i].setText("")
-        main.window.scenes[i].clear()
-        main.window.scenes[i].update()
-
-def fill_labels(videos, tab):
+def fill_thumbnails(thumbnails, tab):
 
     if tab == "anime":
-        labels = [main.window.animeLabel0, main.window.animeLabel1, main.window.animeLabel2,
-                 main.window.animeLabel3, main.window.animeLabel4, main.window.animeLabel5]
+        views = main.window.animeViews
+        scenes = main.window.animeScenes
+    else:
+        views = main.window.videoViews
+        scenes = main.window.videoScenes
+
+    clear_list(tab)
+
+    for i in range(0, len(thumbnails)):
+        data = requests.get(thumbnails[i]).content
+        image = QImage()
+        image.loadFromData(data)
+        scenes[i].addPixmap(QPixmap(image))
+        views[i].fitInView(QRectF(0, 0, 320, 180), Qt.KeepAspectRatio)
+        scenes[i].update()
+
+def fill_labels(titles, tab):
+
+    if tab == "anime":
+        labels = main.window.animeLabels
     elif tab == "playlist":
-        labels = [main.window.videoLabel0, main.window.videoLabel1, main.window.videoLabel2,
-                main.window.videoLabel3, main.window.videoLabel4, main.window.videoLabel5]
-			 
-    for i in range(0, len(videos)):
-	    labels[i].setText(videos[i])
-	
-def youtube_search(keywords, results):
+        labels = main.window.videoLabels
+
+    for i in range(0, len(titles)):
+        labels[i].setText(titles[i])
+
+def youtube_search(keywords, results, addStr):
 
     if login != None:
         youtube = login
 
         searchResponse = youtube.search().list(
-            q=keywords,
+            q="{} {}".format(keywords, addStr),
             part="id, snippet",
             maxResults=results
             ).execute()
 
-        videos = []
+        titles = []
         thumbnails = []
 
         for searchResult in searchResponse.get("items", []):
             if searchResult["id"]["kind"] == "youtube#video":
-                videos.append(searchResult["snippet"]["title"])
+                titles.append(searchResult["snippet"]["title"])
                 thumbnails.append(searchResult["snippet"]["thumbnails"]["medium"]["url"])
 
         fill_thumbnails(thumbnails, "anime")
-        fill_labels(videos, "anime")
+        fill_labels(titles, "anime")
 
     else:
         
@@ -124,10 +123,10 @@ def load_playlist(id):
             thumbnails.append(video["snippet"]["thumbnails"]["medium"]["url"])
             ids.append(video["snippet"]["resourceId"]["videoId"])
 
-        fill_labels(titles, "playlist")
         fill_thumbnails(thumbnails, "playlist")
+        fill_labels(titles, "playlist")
 
-        return titles, thumbnails, ids
+        return ids
 
     else:
         main.window.statusBar().showMessage("You are not logged in!")

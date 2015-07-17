@@ -567,7 +567,7 @@
        <rect>
         <x>10</x>
         <y>220</y>
-        <width>181</width>
+        <width>188</width>
         <height>321</height>
        </rect>
       </property>
@@ -638,6 +638,23 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Text to add at the end of anime title:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>(like OP, ED or OST)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="addTextLabel"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">

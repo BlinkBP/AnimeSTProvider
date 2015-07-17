@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'AnimeSTProvider.ui'
 #
-# Created: Thu Jul 16 21:24:59 2015
+# Created: Fri Jul 17 19:44:50 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -305,7 +305,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.addPlaylistBtn_2)
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
         self.verticalLayoutWidget_5 = QtGui.QWidget(self.tab_2)
-        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(10, 220, 181, 321))
+        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(10, 220, 188, 321))
         self.verticalLayoutWidget_5.setObjectName("verticalLayoutWidget_5")
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.verticalLayoutWidget_5)
         self.verticalLayout_5.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
@@ -340,6 +340,15 @@ class Ui_MainWindow(object):
         self.deleteAnimeBtn.setObjectName("deleteAnimeBtn")
         self.horizontalLayout_6.addWidget(self.deleteAnimeBtn)
         self.verticalLayout_5.addLayout(self.horizontalLayout_6)
+        self.label_2 = QtGui.QLabel(self.verticalLayoutWidget_5)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_5.addWidget(self.label_2)
+        self.label_3 = QtGui.QLabel(self.verticalLayoutWidget_5)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout_5.addWidget(self.label_3)
+        self.addTextLabel = QtGui.QLineEdit(self.verticalLayoutWidget_5)
+        self.addTextLabel.setObjectName("addTextLabel")
+        self.verticalLayout_5.addWidget(self.addTextLabel)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setSpacing(3)
         self.horizontalLayout_3.setContentsMargins(0, -1, -1, -1)
@@ -432,6 +441,8 @@ class Ui_MainWindow(object):
         self.addAnimeBtn.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteAnimeBtn.setToolTip(QtGui.QApplication.translate("MainWindow", "Delete anime from this list", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteAnimeBtn.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Text to add at the end of anime title:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "(like OP, ED or OST)", None, QtGui.QApplication.UnicodeUTF8))
         self.searchYTBtn.setText(QtGui.QApplication.translate("MainWindow", "Search YouTube", None, QtGui.QApplication.UnicodeUTF8))
         self.label_17.setText(QtGui.QApplication.translate("MainWindow", "0/0", None, QtGui.QApplication.UnicodeUTF8))
         self.previousPageBtn1.setText(QtGui.QApplication.translate("MainWindow", "<---", None, QtGui.QApplication.UnicodeUTF8))
