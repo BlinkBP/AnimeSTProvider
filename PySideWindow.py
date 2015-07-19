@@ -1,11 +1,15 @@
 import PySide
-from PySide.QtGui import *
-from PySide.QtCore import *
-from AnimeSTProviderUI import Ui_MainWindow
+import requests
+import Image
+import ImageQt
 import platform
 import GoogleLogin
 import AnimeProvider
 import YouTubeProvider
+from PySide.QtGui import *
+from PySide.QtCore import *
+from AnimeSTProviderUI import Ui_MainWindow
+from io import BytesIO
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -32,7 +36,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.deleteAnimeBtn.clicked.connect(self.delete_anime)
         self.addAnimeBtn.clicked.connect(self.add_anime)
         self.searchYTBtn.clicked.connect(self.search)
-        self.addPlaylistBtn.clicked.connect(self.create_playlist)
+        self.addPlaylistBtn0.clicked.connect(self.create_playlist)
+        self.addPlaylistBtn1.clicked.connect(self.create_playlist)
         self.deletePlaylistBtn.clicked.connect(self.delete_playlist)
         self.loadPlaylistBtn.clicked.connect(self.load_playlist)
         self.addToPlaylistBtn0.clicked.connect(self.add_video_to_playlist)
@@ -47,14 +52,27 @@ class Window(QMainWindow, Ui_MainWindow):
         self.deleteFromPlaylistBtn3.clicked.connect(self.delete_video_from_playlist)
         self.deleteFromPlaylistBtn4.clicked.connect(self.delete_video_from_playlist)
         self.deleteFromPlaylistBtn5.clicked.connect(self.delete_video_from_playlist)
+        self.nextPageBtn0.clicked.connect(self.nextPage)
+        self.nextPageBtn1.clicked.connect(self.nextPage)
+        self.previousPageBtn0.clicked.connect(self.previousPage)
+        self.previousPageBtn1.clicked.connect(self.previousPage)
         #Variables
         self.playlistIds = []
-        self.videoIdsInPlaylist = []
+        self.playlistVideoIds = []
+        self.playlistVideoTitles = []
+        self.playlistVideoThumbnails = []
         self.videoIds = []
+        self.videoTitles = []
+        self.videoThumbnails = []
         self.currentPlaylistRow = 0
         self.currentAnimeRow = 0
+        self.totalVideoPages = 0
+        self.totalPlaylistPages = 0
+        self.currentVideoPage = 0
+        self.currentPlaylistPage = 0
         #Events
         self.userPlaylistsList0.itemClicked.connect(self.on_playlist_row_changed)
+        self.userPlaylistsList1.itemClicked.connect(self.on_playlist_row_changed)
         self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
 
         self.initialize_thumbnails()
@@ -66,7 +84,148 @@ class Window(QMainWindow, Ui_MainWindow):
             self.animeScenes[i].clear()
             self.videoScenes[i].clear()
 
+    def clear_labels(self, tab):
+
+       if tab == "anime":
+            labels = self.animeLabels
+            for i in range(0, 6):
+                labels[i].setText("")
+       elif tab == "playlist":
+            labels = self.videoLabels
+            for i in range(0, 6):
+                labels[i].setText("")
+
+    def clear_thumbnails(self, tab):
+
+        if tab == "anime":
+            for i in range(0, 6):
+                self.animeScenes[i].clear()
+                self.animeScenes[i].update()
+        elif tab == "playlist":
+            for i in range(0, 6):
+                self.videoScenes[i].clear()
+                self.videoScenes[i].update()
+
+    def fill_thumbnails(self, thumbnails, tab):
+
+        if tab == "anime":
+            views = self.animeViews
+            scenes = self.animeScenes
+        elif tab == "playlist":
+            views = self.videoViews
+            scenes = self.videoScenes
+
+        self.clear_thumbnails(tab)
+
+        if len(thumbnails) > 6:
+            maxIndex = 6
+        else:
+            maxIndex = len(thumbnails)
+
+        for i in range(0, maxIndex):
+            data = requests.get(thumbnails[i]).content
+            image = QImage()
+            image.loadFromData(data)
+            scenes[i].addPixmap(QPixmap(image))
+            views[i].fitInView(QRectF(0, 0, 320, 180), Qt.KeepAspectRatio)
+            scenes[i].update()
+
+    def fill_labels(self, titles, tab):
+
+        if tab == "anime":
+            labels = self.animeLabels
+        elif tab == "playlist":
+            labels = self.videoLabels
+
+        self.clear_labels(tab)
+
+        if len(titles) > 6:
+            maxIndex = 6
+        else:
+            maxIndex = len(titles)
+
+
+        for i in range(0, maxIndex):
+            labels[i].setText(titles[i])
+
+    def update_page_label(self, tab):
+
+        if tab == "anime":
+            pagesLabel = self.pagesLabel1
+            currentPage = self.currentVideoPage
+            totalPages = self.totalVideoPages
+        elif tab == "playlist":
+            pagesLabel = self.pagesLabel0
+            currentPage = self.currentPlaylistPage
+            totalPages = self.totalPlaylistPages
+
+        pagesLabel.setText("{}/{}".format(currentPage + 1, totalPages)) # currentPage starts with 0 so we are adding one to it
+
+    def nextPage(self):
+
+        senderId = self.sender().objectName()[-1:]
+
+        # Throughout the program '0' most often means that the widget is on playlist management tab and '1' means it is on YT search tab
+        if senderId == "1":
+            # First we change the page number
+            self.currentVideoPage += 1
+            # Then we use this number to figure out an index number to use with arrays (subtract one because array starts with 0)
+            index = self.currentVideoPage * 6 - 1
+            if self.currentVideoPage <= self.totalVideoPages:
+                tab = "anime"
+                self.clear_thumbnails(tab)
+                self.clear_labels(tab)
+                self.fill_thumbnails(self.videoThumbnails[index:], tab)
+                self.fill_labels(self.videoTitles[index:], tab)
+                self.update_page_label(tab)
+            else:
+                self.currentVideoPage -= 1
+
+        elif senderId == "0":
+            self.currentPlaylistPage += 1
+            index = self.currentPlaylistPage * 6 - 1
+            if self.currentPlaylistPage <= self.totalPlaylistPages:
+                tab = "playlist"
+                self.clear_thumbnails(tab)
+                self.clear_labels(tab)
+                self.fill_thumbnails(self.playlistVideoThumbnails[index:], tab)
+                self.fill_labels(self.playlistVideoTitles[index:], tab)
+                self.update_page_label(tab)
+            else:
+                self.currentPlaylistPage -= 1
+
+    def previousPage(self):
+
+        senderId = self.sender().objectName()[-1:]
+
+        if senderId == "1":
+            self.currentVideoPage -= 1
+            index = self.currentVideoPage * 6 - 1
+            if self.currentVideoPage >= 0:
+                tab = "anime"
+                self.clear_thumbnails(tab)
+                self.clear_labels(tab)
+                self.fill_thumbnails(self.videoThumbnails[index:], tab)
+                self.fill_labels(self.videoTitles[index:], tab)
+                self.update_page_label(tab)
+            else:
+                self.currentVideoPage += 1
+
+        elif senderId == "0":
+            self.currentPlaylistPage -= 1
+            index = self.currentPlaylistPage * 6 - 1
+            if self.currentPlaylistPage >= 0:
+                tab = "playlist"
+                self.clear_thumbnails(tab)
+                self.clear_labels(tab)
+                self.fill_thumbnails(self.playlistVideoThumbnails[index:], tab)
+                self.fill_labels(self.playlistVideoTitles[index:], tab)
+                self.update_page_label(tab)
+            else:
+                self.currentPlaylistPage += 1
+
     def open_HTML(self):
+
         fname, str = QFileDialog.getOpenFileName(self, 'Open file', '/home/Desktop', "Files (*.html)")
         if fname != '':
             animeNames = AnimeProvider.get_anime_from_file(fname)
@@ -84,10 +243,6 @@ class Window(QMainWindow, Ui_MainWindow):
         for title in titles:
             self.userPlaylistsList0.addItem(title)
             self.userPlaylistsList1.addItem(title)
-
-    def load_playlist(self):
-
-        self.videoIdsInPlaylist = YouTubeProvider.load_playlist(self.playlistIds[self.currentPlaylistRow])
 
     def create_playlist(self):
         
@@ -119,8 +274,8 @@ class Window(QMainWindow, Ui_MainWindow):
         # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
         senderId = self.sender().objectName()[-1:]
 
-        YouTubeProvider.delete_from_playlist(self.videoIdsInPlaylist[int(senderId)])
-        self.load_playlist(self.playlistIds[self.currentPlaylistRow])
+        YouTubeProvider.delete_from_playlist(self.playlistVideoIds[int(senderId)])
+        self.load_playlist()
 
     def log_in(self):
         json, str = QFileDialog.getOpenFileName(self, 'Open JSON file', '/home/Desktop', "Files (*.JSON)")
@@ -137,13 +292,38 @@ class Window(QMainWindow, Ui_MainWindow):
         if ok:
             self.animeListWidget.addItem(title)
 
+    def count_pages(self, videos, tab):
+
+        if tab == "anime":
+            self.totalVideoPages = round(len(videos) / 6)
+        elif tab == "playlist":
+            self.totalPlaylistPages = round(len(videos) / 6)
+
+    def load_playlist(self):
+
+        self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds = YouTubeProvider.load_playlist(
+            self.playlistIds[self.currentPlaylistRow]
+            )
+
+        self.count_pages(self.playlistVideoTitles, "playlist")
+
+        self.fill_thumbnails(self.playlistVideoThumbnails, "playlist")
+        self.fill_labels(self.playlistVideoTitles, "playlist")
+        self.update_page_label("playlist")
+
     def search(self):
 
-        self.videoIds = YouTubeProvider.youtube_search(
+        self.videoTitles, self.videoThumbnails, self.videoIds = YouTubeProvider.youtube_search(
             self.animeListWidget.item(self.currentAnimeRow).text(),
-            6,
+            25,
             self.addTextLabel.text()
             )
+
+        self.count_pages(self.videoTitles, "anime")
+
+        self.fill_thumbnails(self.videoThumbnails, "anime")
+        self.fill_labels(self.videoTitles, "anime")
+        self.update_page_label("anime")
 
     def show_about(self):
         QMessageBox.about(self, "About AnimeSTProvider",
@@ -156,7 +336,11 @@ class Window(QMainWindow, Ui_MainWindow):
             )
 
     def on_playlist_row_changed(self, item):
-        self.currentPlaylistRow = self.userPlaylistsList0.row(item)
+
+        if self.sender().objectName() == "userPlaylistsList0":
+            self.currentPlaylistRow = self.userPlaylistsList0.row(item)
+        elif self.sender().objectName() == "userPlaylistsList1":
+            self.currentPlaylistRow = self.userPlaylistsList1.row(item)
 
     def on_anime_row_changed(self, item):
         self.currentAnimeRow = self.animeListWidget.row(item)

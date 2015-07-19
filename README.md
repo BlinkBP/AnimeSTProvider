@@ -6,11 +6,12 @@
 
 AnimeSTProvider runs on **Python 3.4**.
 
-Actual version: *0.5.0*
+Actual version: *0.9.0*
 
 ### TODO List ###
 
--Showing videos on multiple pages (ability to move between pages)
+-Previewing videos  
+-Messages when things are done + animations when things are being done
 
 ### How do I get set up? ###
 
