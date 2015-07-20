@@ -7,9 +7,9 @@ from PySide.QtCore import QCoreApplication
 
 if __name__ == '__main__':
     
-    # QCoreApplication.addLibraryPath()
     app = QApplication(sys.argv)
-    app.addLibraryPath('/Python34/Lib/site-packages/PySide/plugins/')
+    # We need to load jpeg plugin to show thumbnails
+    app.addLibraryPath('plugins/')
     window = PySideWindow.Window()
     window.show()
     sys.exit(app.exec_())

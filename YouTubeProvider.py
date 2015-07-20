@@ -18,14 +18,16 @@ def youtube_search(keywords, results, addStr):
         titles = []
         thumbnails = []
         ids = []
+        urls = []
 
-        for searchResult in searchResponse.get("items", []):
-            if searchResult["id"]["kind"] == "youtube#video":
-                titles.append(searchResult["snippet"]["title"])
-                thumbnails.append(searchResult["snippet"]["thumbnails"]["medium"]["url"])
-                ids.append(searchResult["id"])
+        for video in searchResponse.get("items", []):
+            if video["id"]["kind"] == "youtube#video":
+                titles.append(video["snippet"]["title"])
+                thumbnails.append(video["snippet"]["thumbnails"]["medium"]["url"])
+                ids.append(video["id"])
+                urls.append(video["id"]["videoId"])
 
-        return titles, thumbnails, ids
+        return titles, thumbnails, ids, urls
 
     else:
         
@@ -65,6 +67,7 @@ def load_playlist(id):
         titles = []
         thumbnails = []
         ids = []
+        urls = []
 
         playlist = youtube.playlistItems().list(
             part="snippet, id",
@@ -75,8 +78,9 @@ def load_playlist(id):
             titles.append(video["snippet"]["title"])
             thumbnails.append(video["snippet"]["thumbnails"]["medium"]["url"])
             ids.append(video["id"])
+            urls.append(video["snippet"]["resourceId"]["videoId"])
 
-        return titles, thumbnails, ids
+        return titles, thumbnails, ids, urls
 
     else:
         main.window.statusBar().showMessage("You are not logged in!")

@@ -6,8 +6,10 @@ import platform
 import GoogleLogin
 import AnimeProvider
 import YouTubeProvider
+
 from PySide.QtGui import *
 from PySide.QtCore import *
+from PySide.QtWebKit import QWebView, QWebSettings
 from AnimeSTProviderUI import Ui_MainWindow
 from io import BytesIO
 
@@ -40,6 +42,18 @@ class Window(QMainWindow, Ui_MainWindow):
         self.addPlaylistBtn1.clicked.connect(self.create_playlist)
         self.deletePlaylistBtn.clicked.connect(self.delete_playlist)
         self.loadPlaylistBtn.clicked.connect(self.load_playlist)
+        self.videoPreviewBtn0.clicked.connect(self.preview)
+        self.videoPreviewBtn1.clicked.connect(self.preview)
+        self.videoPreviewBtn2.clicked.connect(self.preview)
+        self.videoPreviewBtn3.clicked.connect(self.preview)
+        self.videoPreviewBtn4.clicked.connect(self.preview)
+        self.videoPreviewBtn5.clicked.connect(self.preview)
+        self.playlistVideoPreviewBtn0.clicked.connect(self.preview)
+        self.playlistVideoPreviewBtn1.clicked.connect(self.preview)
+        self.playlistVideoPreviewBtn2.clicked.connect(self.preview)
+        self.playlistVideoPreviewBtn3.clicked.connect(self.preview)
+        self.playlistVideoPreviewBtn4.clicked.connect(self.preview)
+        self.playlistVideoPreviewBtn5.clicked.connect(self.preview)
         self.addToPlaylistBtn0.clicked.connect(self.add_video_to_playlist)
         self.addToPlaylistBtn1.clicked.connect(self.add_video_to_playlist)
         self.addToPlaylistBtn2.clicked.connect(self.add_video_to_playlist)
@@ -58,9 +72,11 @@ class Window(QMainWindow, Ui_MainWindow):
         self.previousPageBtn1.clicked.connect(self.previousPage)
         #Variables
         self.playlistIds = []
+        self.playlistVideoUrlIds = []
         self.playlistVideoIds = []
         self.playlistVideoTitles = []
         self.playlistVideoThumbnails = []
+        self.videoUrlIds = []
         self.videoIds = []
         self.videoTitles = []
         self.videoThumbnails = []
@@ -159,7 +175,7 @@ class Window(QMainWindow, Ui_MainWindow):
             currentPage = self.currentPlaylistPage
             totalPages = self.totalPlaylistPages
 
-        pagesLabel.setText("{}/{}".format(currentPage + 1, totalPages)) # currentPage starts with 0 so we are adding one to it
+        pagesLabel.setText("{}/{}".format(currentPage + 1, totalPages + 1)) # pages' variables start with 0 so we are adding one to them
 
     def nextPage(self):
 
@@ -169,8 +185,8 @@ class Window(QMainWindow, Ui_MainWindow):
         if senderId == "1":
             # First we change the page number
             self.currentVideoPage += 1
-            # Then we use this number to figure out an index number to use with arrays (subtract one because array starts with 0)
-            index = self.currentVideoPage * 6 - 1
+            # Then we use this number to figure out an index number to use with arrays
+            index = self.currentVideoPage * 6
             if self.currentVideoPage <= self.totalVideoPages:
                 tab = "anime"
                 self.clear_thumbnails(tab)
@@ -183,7 +199,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         elif senderId == "0":
             self.currentPlaylistPage += 1
-            index = self.currentPlaylistPage * 6 - 1
+            index = self.currentPlaylistPage * 6
             if self.currentPlaylistPage <= self.totalPlaylistPages:
                 tab = "playlist"
                 self.clear_thumbnails(tab)
@@ -200,7 +216,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if senderId == "1":
             self.currentVideoPage -= 1
-            index = self.currentVideoPage * 6 - 1
+            index = self.currentVideoPage * 6
             if self.currentVideoPage >= 0:
                 tab = "anime"
                 self.clear_thumbnails(tab)
@@ -213,7 +229,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         elif senderId == "0":
             self.currentPlaylistPage -= 1
-            index = self.currentPlaylistPage * 6 - 1
+            index = self.currentPlaylistPage * 6
             if self.currentPlaylistPage >= 0:
                 tab = "playlist"
                 self.clear_thumbnails(tab)
@@ -301,7 +317,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def load_playlist(self):
 
-        self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds = YouTubeProvider.load_playlist(
+        self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds, self.playlistVideoUrlIds	= YouTubeProvider.load_playlist(
             self.playlistIds[self.currentPlaylistRow]
             )
 
@@ -313,9 +329,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def search(self):
 
-        self.videoTitles, self.videoThumbnails, self.videoIds = YouTubeProvider.youtube_search(
+        self.videoTitles, self.videoThumbnails, self.videoIds, self.videoUrlIds = YouTubeProvider.youtube_search(
             self.animeListWidget.item(self.currentAnimeRow).text(),
-            25,
+            30,
             self.addTextLabel.text()
             )
 
@@ -324,6 +340,52 @@ class Window(QMainWindow, Ui_MainWindow):
         self.fill_thumbnails(self.videoThumbnails, "anime")
         self.fill_labels(self.videoTitles, "anime")
         self.update_page_label("anime")
+
+    def preview(self):
+
+        sender = self.sender().objectName()
+        # We can use number at the end of sender object's name as an index for arrays
+        index = int(sender[-1:])
+        # If sender object's name starts with "video" we know that it comes from YT tab, not playlist
+        if sender[:5] == "video":
+            if len(self.videoUrlIds) > 0:
+                id = self.videoUrlIds[index]
+            else:
+                return
+        else:
+            if len(self.playlistVideoUrlIds) > 0:
+                id = self.playlistVideoUrlIds[index]
+            else:
+                return
+
+        self.url = "http://www.youtube.com/embed/{}".format(id)
+
+        self.previewWindow = QWidget()
+        self.previewWindow.setWindowFlags(Qt.FramelessWindowHint)
+        self.previewWindow.setFixedSize(700,450)
+        self.previewWindow.setWindowTitle("Preview")
+        self.layout = QVBoxLayout()
+        self.previewWindow.setLayout(self.layout)
+        self.webView = QWebView()
+        self.webView.settings().setAttribute(QWebSettings.PluginsEnabled, True)
+        s = """<!DOCTYPE html>
+                <html>
+                <body>
+                <iframe id="ytplayer" type="text/html" width="640" height="390" src="{}" frameborder="0"/>
+                </body>
+                </html>""".format(self.url)
+        self.webView.setHtml(s)
+        self.closeBtn = QPushButton()
+        self.closeBtn.setText("Close")
+        self.layout.addWidget(self.webView)
+        self.layout.addWidget(self.closeBtn)
+        self.closeBtn.clicked.connect(self.destroy_preview)
+        self.previewWindow.show()
+
+    def destroy_preview(self):
+
+        self.webView.load("")
+        self.previewWindow.close()
 
     def show_about(self):
         QMessageBox.about(self, "About AnimeSTProvider",

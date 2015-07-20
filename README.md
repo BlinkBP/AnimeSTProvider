@@ -9,9 +9,10 @@ AnimeSTProvider runs on **Python 3.4**.
 Actual version: *0.9.0*
 
 ### TODO List ###
-
--Previewing videos  
--Messages when things are done + animations when things are being done
+ 
+-Messages when things are done  
+-Animations when things are being done  
+-Conditions when pressing buttons (if nothing is selected app is giving error right now)
 
 ### How do I get set up? ###
 
