@@ -90,10 +90,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.userPlaylistsList0.itemClicked.connect(self.on_playlist_row_changed)
         self.userPlaylistsList1.itemClicked.connect(self.on_playlist_row_changed)
         self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
+        #Icons
+        self.icon = QIcon("assets/icon.png")
 
+        self.setWindowIcon(self.icon)
         self.initialize_thumbnails()
 
     def initialize_thumbnails(self):
+
         for i in range(0, 6):
             self.animeViews[i].setScene(self.animeScenes[i])
             self.videoViews[i].setScene(self.videoScenes[i])
@@ -247,7 +251,7 @@ class Window(QMainWindow, Ui_MainWindow):
             animeNames = AnimeProvider.get_anime_from_file(fname)
             for anime in animeNames:
                 self.animeListWidget.addItem(anime)
-            self.statusBar().showMessage('File successfully loaded from HTML')
+            self.statusBar().showMessage('File successfully loaded from HTML!')
 
     def list_playlists(self):
 
@@ -261,48 +265,74 @@ class Window(QMainWindow, Ui_MainWindow):
             self.userPlaylistsList1.addItem(title)
 
     def create_playlist(self):
-        
-        name, ok = QInputDialog.getText(self, 'Add playlist', 'Enter playlist name: ')
 
-        if ok:
-            YouTubeProvider.create_playlist(name)
-            self.userPlaylistsList0.addItem(name)
-            self.userPlaylistsList1.addItem(name)
+        if YouTubeProvider.login is not None:
+            name, ok = QInputDialog.getText(self, 'Add playlist', 'Enter playlist name: ')
+
+            if ok:
+                YouTubeProvider.create_playlist(name)
+                self.userPlaylistsList0.addItem(name)
+                self.userPlaylistsList1.addItem(name)
+        else:
+            self.message = QMessageBox()
+            self.message.setWindowTitle("Error")
+            self.message.setText("You must log in first.")
+            self.message.setDefaultButton(QMessageBox.Ok)
+            self.message.open()
 
     def delete_playlist(self):
 
-        YouTubeProvider.delete_playlist(self.playlistIds[self.currentPlaylistRow])
-        self.userPlaylistsList0.takeItem(self.currentPlaylistRow)
-        self.userPlaylistsList1.takeItem(self.currentPlaylistRow)
+        if self.userPlaylistsList0.item(self.currentPlaylistRow) is not None:
+            reply = QMessageBox.question(self, 'Are you sure?', "Are you sure?",
+                QMessageBox.Yes,
+                QMessageBox.No,
+                QMessageBox.No
+                )
+            if reply == QMessageBox.Yes:
+                YouTubeProvider.delete_playlist(self.playlistIds[self.currentPlaylistRow])
+                self.userPlaylistsList0.takeItem(self.currentPlaylistRow)
+                self.userPlaylistsList1.takeItem(self.currentPlaylistRow)
+        else:
+            self.message = QMessageBox()
+            self.message.setWindowTitle("Error")
+            self.message.setText("You must log in first or you have no playlists.")
+            self.message.setDefaultButton(QMessageBox.Ok)
+            self.message.open()
 
     def add_video_to_playlist(self):
 
-        # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
-        senderId = self.sender().objectName()[-1:]
+        if len(self.VideoIds) > 0:
+            # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
+            senderId = self.sender().objectName()[-1:]
 
-        videoId = self.videoIds[int(senderId)]
-        playlistId = self.playlistIds[self.currentPlaylistRow]
+            videoId = self.videoIds[int(senderId)]
+            playlistId = self.playlistIds[self.currentPlaylistRow]
 
-        YouTubeProvider.add_to_playlist(videoId, playlistId)
+            YouTubeProvider.add_to_playlist(videoId, playlistId)
 
     def delete_video_from_playlist(self):
-        
-        # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
-        senderId = self.sender().objectName()[-1:]
 
-        YouTubeProvider.delete_from_playlist(self.playlistVideoIds[int(senderId)])
-        self.load_playlist()
+        if len(self.playlistVideoIds) > 0:
+            # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
+            senderId = self.sender().objectName()[-1:]
+
+            YouTubeProvider.delete_from_playlist(self.playlistVideoIds[int(senderId)])
+            self.load_playlist()
 
     def log_in(self):
+
         json, str = QFileDialog.getOpenFileName(self, 'Open JSON file', '/home/Desktop', "Files (*.JSON)")
         if json != '':
             GoogleLogin.json_log_in(json)
+            self.StatusBar().showMessage('Logged in!')
             self.list_playlists()
 
     def delete_anime(self):
+
         self.animeListWidget.takeItem(self.animeListWidget.currentRow())
 
     def add_anime(self):
+
         title, ok = QInputDialog.getText(self, 'Add anime', 'Enter anime title:')
 
         if ok:
@@ -317,29 +347,52 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def load_playlist(self):
 
-        self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds, self.playlistVideoUrlIds	= YouTubeProvider.load_playlist(
-            self.playlistIds[self.currentPlaylistRow]
-            )
+        if len(self.playlistIds) > 0:
+            self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds, self.playlistVideoUrlIds	= YouTubeProvider.load_playlist(
+                self.playlistIds[self.currentPlaylistRow]
+                )
 
-        self.count_pages(self.playlistVideoTitles, "playlist")
+            self.count_pages(self.playlistVideoTitles, "playlist")
 
-        self.fill_thumbnails(self.playlistVideoThumbnails, "playlist")
-        self.fill_labels(self.playlistVideoTitles, "playlist")
-        self.update_page_label("playlist")
+            self.fill_thumbnails(self.playlistVideoThumbnails, "playlist")
+            self.fill_labels(self.playlistVideoTitles, "playlist")
+            self.update_page_label("playlist")
+            self.StatusBar().showMessage('Playlist loaded!')
+        else:
+            self.message = QMessageBox()
+            self.message.setWindowTitle("Error")
+            self.message.setText("You must log in first or this playlist has no videos.")
+            self.message.setDefaultButton(QMessageBox.Ok)
+            self.message.open()
 
     def search(self):
 
-        self.videoTitles, self.videoThumbnails, self.videoIds, self.videoUrlIds = YouTubeProvider.youtube_search(
-            self.animeListWidget.item(self.currentAnimeRow).text(),
-            30,
-            self.addTextLabel.text()
-            )
+        if self.animeListWidget.item(self.currentAnimeRow) is not None:
+            if YouTubeProvider.login is not None:
+                self.videoTitles, self.videoThumbnails, self.videoIds, self.videoUrlIds = YouTubeProvider.youtube_search(
+                    self.animeListWidget.item(self.currentAnimeRow).text(),
+                    30,
+                    self.addTextLabel.text()
+                    )
 
-        self.count_pages(self.videoTitles, "anime")
+                self.count_pages(self.videoTitles, "anime")
 
-        self.fill_thumbnails(self.videoThumbnails, "anime")
-        self.fill_labels(self.videoTitles, "anime")
-        self.update_page_label("anime")
+                self.fill_thumbnails(self.videoThumbnails, "anime")
+                self.fill_labels(self.videoTitles, "anime")
+                self.update_page_label("anime")
+                self.StatusBar().showMessage('Search done!')
+            else:
+                self.message = QMessageBox()
+                self.message.setWindowTitle("Error")
+                self.message.setText("You must log in first.")
+                self.message.setDefaultButton(QMessageBox.Ok)
+                self.message.open()
+        else:
+            self.message = QMessageBox()
+            self.message.setWindowTitle("Error")
+            self.message.setText("You must choose anime title first.")
+            self.message.setDefaultButton(QMessageBox.Ok)
+            self.message.open()
 
     def preview(self):
 
@@ -362,7 +415,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.previewWindow = QWidget()
         self.previewWindow.setWindowFlags(Qt.FramelessWindowHint)
-        self.previewWindow.setFixedSize(700,450)
+        self.previewWindow.setFixedSize(685,470)
         self.previewWindow.setWindowTitle("Preview")
         self.layout = QVBoxLayout()
         self.previewWindow.setLayout(self.layout)
@@ -388,6 +441,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.previewWindow.close()
 
     def show_about(self):
+
         QMessageBox.about(self, "About AnimeSTProvider",
             """<p>Copyright &copy; 2015 Jan Kominczyk.
             <p>Python {} - PySide version {} - Qt version {}"""
@@ -405,4 +459,5 @@ class Window(QMainWindow, Ui_MainWindow):
             self.currentPlaylistRow = self.userPlaylistsList1.row(item)
 
     def on_anime_row_changed(self, item):
+
         self.currentAnimeRow = self.animeListWidget.row(item)

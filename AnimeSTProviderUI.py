@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'AnimeSTProvider.ui'
 #
-# Created: Sun Jul 19 22:41:43 2015
+# Created: Mon Jul 20 20:55:57 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         self.playlistVideoPreviewBtn5.setObjectName("playlistVideoPreviewBtn5")
         self.gridLayout.addWidget(self.playlistVideoPreviewBtn5, 5, 1, 1, 1)
         self.horizontalLayoutWidget_2 = QtGui.QWidget(self.tab)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(610, 560, 210, 31))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(610, 560, 232, 31))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -405,7 +405,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.searchYTBtn)
         self.verticalLayout_5.addLayout(self.horizontalLayout_3)
         self.horizontalLayoutWidget_3 = QtGui.QWidget(self.tab_2)
-        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(610, 560, 210, 31))
+        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(610, 560, 232, 31))
         self.horizontalLayoutWidget_3.setObjectName("horizontalLayoutWidget_3")
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_3)
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
