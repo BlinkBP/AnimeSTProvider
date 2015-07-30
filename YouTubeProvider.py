@@ -3,7 +3,7 @@ import __main__ as main
 login = None
 videos = []
 
-def youtube_search(keywords, results, addStr):
+def youtube_search(keywords, addStr):
 
     if login != None:
 
@@ -12,7 +12,7 @@ def youtube_search(keywords, results, addStr):
         searchResponse = youtube.search().list(
             q="{} {}".format(keywords, addStr),
             part="id, snippet",
-            maxResults=results
+            maxResults=30
             ).execute()
 
         titles = []
@@ -71,7 +71,8 @@ def load_playlist(id):
 
         playlist = youtube.playlistItems().list(
             part="snippet, id",
-            playlistId=id
+            playlistId=id,
+            maxResults=30
             ).execute()
 
         for video in playlist.get("items", []):

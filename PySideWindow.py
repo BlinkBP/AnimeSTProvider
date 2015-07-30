@@ -35,6 +35,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.actionAbout.triggered.connect(self.show_about)
         self.actionLoad_JSON_auth_file.triggered.connect(self.log_in)
         # Buttons
+        self.closeBtn = QPushButton()
         self.deleteAnimeBtn.clicked.connect(self.delete_anime)
         self.addAnimeBtn.clicked.connect(self.add_anime)
         self.searchYTBtn.clicked.connect(self.search)
@@ -70,6 +71,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.nextPageBtn1.clicked.connect(self.nextPage)
         self.previousPageBtn0.clicked.connect(self.previousPage)
         self.previousPageBtn1.clicked.connect(self.previousPage)
+        self.closeBtn.clicked.connect(self.destroy_preview)
         #Variables
         self.playlistIds = []
         self.playlistVideoUrlIds = []
@@ -92,9 +94,13 @@ class Window(QMainWindow, Ui_MainWindow):
         self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
         #Icons
         self.icon = QIcon("assets/icon.png")
+        #Misc
+        self.previewWindow = QWidget()
+        self.webView = QWebView()
 
         self.setWindowIcon(self.icon)
         self.initialize_thumbnails()
+        self.initialize_preview()
 
     def initialize_thumbnails(self):
 
@@ -103,6 +109,18 @@ class Window(QMainWindow, Ui_MainWindow):
             self.videoViews[i].setScene(self.videoScenes[i])
             self.animeScenes[i].clear()
             self.videoScenes[i].clear()
+
+    def initialize_preview(self):
+
+        self.previewWindow.setWindowFlags(Qt.FramelessWindowHint)
+        self.previewWindow.setFixedSize(685,470)
+        self.previewWindow.setWindowTitle("Preview")
+        self.layout = QVBoxLayout()
+        self.previewWindow.setLayout(self.layout)
+        self.webView.settings().setAttribute(QWebSettings.PluginsEnabled, True)
+        self.closeBtn.setText("Close")
+        self.layout.addWidget(self.webView)
+        self.layout.addWidget(self.closeBtn)
 
     def clear_labels(self, tab):
 
@@ -371,7 +389,6 @@ class Window(QMainWindow, Ui_MainWindow):
             if YouTubeProvider.login is not None:
                 self.videoTitles, self.videoThumbnails, self.videoIds, self.videoUrlIds = YouTubeProvider.youtube_search(
                     self.animeListWidget.item(self.currentAnimeRow).text(),
-                    30,
                     self.addTextLabel.text()
                     )
 
@@ -397,30 +414,24 @@ class Window(QMainWindow, Ui_MainWindow):
     def preview(self):
 
         sender = self.sender().objectName()
-        # We can use number at the end of sender object's name as an index for arrays
-        index = int(sender[-1:])
+
         # If sender object's name starts with "video" we know that it comes from YT tab, not playlist
         if sender[:5] == "video":
             if len(self.videoUrlIds) > 0:
+                # We can use number at the end of sender object's name as an index for arrays but we must take page number into account
+                index = int(sender[-1:]) + self.currentVideoPage * 6
                 id = self.videoUrlIds[index]
             else:
                 return
         else:
             if len(self.playlistVideoUrlIds) > 0:
+                index = int(sender[-1:]) + self.currentPlaylistPage * 6
                 id = self.playlistVideoUrlIds[index]
             else:
                 return
 
         self.url = "http://www.youtube.com/embed/{}".format(id)
 
-        self.previewWindow = QWidget()
-        self.previewWindow.setWindowFlags(Qt.FramelessWindowHint)
-        self.previewWindow.setFixedSize(685,470)
-        self.previewWindow.setWindowTitle("Preview")
-        self.layout = QVBoxLayout()
-        self.previewWindow.setLayout(self.layout)
-        self.webView = QWebView()
-        self.webView.settings().setAttribute(QWebSettings.PluginsEnabled, True)
         s = """<!DOCTYPE html>
                 <html>
                 <body>
@@ -428,17 +439,12 @@ class Window(QMainWindow, Ui_MainWindow):
                 </body>
                 </html>""".format(self.url)
         self.webView.setHtml(s)
-        self.closeBtn = QPushButton()
-        self.closeBtn.setText("Close")
-        self.layout.addWidget(self.webView)
-        self.layout.addWidget(self.closeBtn)
-        self.closeBtn.clicked.connect(self.destroy_preview)
         self.previewWindow.show()
 
     def destroy_preview(self):
 
         self.webView.load("")
-        self.previewWindow.close()
+        self.previewWindow.hide()
 
     def show_about(self):
 
