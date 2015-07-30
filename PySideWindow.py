@@ -324,7 +324,7 @@ class Window(QMainWindow, Ui_MainWindow):
         json, str = QFileDialog.getOpenFileName(self, 'Open JSON file', '/home/Desktop', "Files (*.JSON)")
         if json != '':
             GoogleLogin.json_log_in(json)
-            self.StatusBar().showMessage('Logged in!')
+            self.statusBar().showMessage('Logged in!')
             self.list_playlists()
 
     def delete_anime(self):
@@ -357,7 +357,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.fill_thumbnails(self.playlistVideoThumbnails, "playlist")
             self.fill_labels(self.playlistVideoTitles, "playlist")
             self.update_page_label("playlist")
-            self.StatusBar().showMessage('Playlist loaded!')
+            self.statusBar().showMessage('Playlist loaded!')
         else:
             self.message = QMessageBox()
             self.message.setWindowTitle("Error")
@@ -380,7 +380,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.fill_thumbnails(self.videoThumbnails, "anime")
                 self.fill_labels(self.videoTitles, "anime")
                 self.update_page_label("anime")
-                self.StatusBar().showMessage('Search done!')
+                self.statusBar().showMessage('Search done!')
             else:
                 self.message = QMessageBox()
                 self.message.setWindowTitle("Error")
