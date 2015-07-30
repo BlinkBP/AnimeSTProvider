@@ -301,7 +301,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def add_video_to_playlist(self):
 
-        if len(self.VideoIds) > 0:
+        if len(self.videoIds) > 0:
             # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
             senderId = self.sender().objectName()[-1:]
 
