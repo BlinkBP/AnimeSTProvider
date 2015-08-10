@@ -6,7 +6,7 @@ AnimeSTProvider is a little python app which gets animes from your anime list at
   
 AnimeSTProvider runs on **Python 3.4**.  
   
-Actual version: **1.0.1**  
+Actual version: **1.1.0**  
   
 I made this app to learn new things/develop my programming skills.  
   
@@ -16,8 +16,7 @@ I made this app to learn new things/develop my programming skills.
   
 ### How do I get set up?   
   
-You need *BeautifulSoup*, *PySide*, *Google API*, *Requests*, *PIL*.   
-Place `qgif4.dll` and `qjpeg4.dll` in `plugins` folder *(You can find those plugins in `/Python34/Lib/site-packages/PySide/plugins/imageformats/`)*  
+You need *BeautifulSoup*, *PySide*, *Google API*, *Requests*, *PIL*.    
 Run `__main__.py`.  
   
 ### Who do I talk to?   

@@ -8,8 +8,8 @@ from PySide.QtCore import QCoreApplication
 if __name__ == '__main__':
     
     app = QApplication(sys.argv)
-    # We need to load jpeg plugin to show thumbnails
-    app.addLibraryPath('plugins/')
+    # We need to load plugin to show thumbnails
+    app.addLibraryPath('/Python34/Lib/site-packages/PySide/plugins/')
     window = PySideWindow.Window()
     window.show()
     sys.exit(app.exec_())
