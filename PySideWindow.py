@@ -1,7 +1,7 @@
 import PySide
 import requests
-import Image
-import ImageQt
+from PIL import Image
+from PIL import ImageQt
 import platform
 import GoogleLogin
 import AnimeProvider
