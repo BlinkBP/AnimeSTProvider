@@ -6,7 +6,7 @@ from PySide.QtCore import QCoreApplication
 
 
 if __name__ == '__main__':
-    
+
     app = QApplication(sys.argv)
     # We need to load plugin to show thumbnails
     app.addLibraryPath('/Python34/Lib/site-packages/PySide/plugins/')
