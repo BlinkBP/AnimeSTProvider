@@ -1,26 +1,34 @@
 from PySide import QtCore, QtGui
 
 class Ui_MainWindow(object):
+
+    def onResize(self, newSize):
+        self.tabWidget.resize(self.MW.size())
+        self.centralWidget.resize(self.MW.size())
+
     def setupUi(self, MainWindow):
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
         ### Main Window
         #MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(600, 450))
-
+        self.MW = MainWindow
+        MainWindow.resizeEvent = self.onResize
+        
         ### Central Widget
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setSizePolicy(sizePolicy)
-        self.centralwidget.setMinimumSize(QtCore.QSize(600, 450))
-        
-        ######### Tab 1
+        #self.centralwidget.setMinimumSize(QtCore.QSize(600, 450))
+
+        ### Main tabWidget
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
-        #self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1000, 700))
-        self.tab = QtGui.QWidget()
-        #self.tabWidget.setSizePolicy(sizePolicy)
+        self.tabWidget.setGeometry(MainWindow.geometry())
+        self.tabWidget.setSizePolicy(sizePolicy)
         #self.tabWidget.setMinimumSize(QtCore.QSize(600,450))
 
+        ######### Tab 1
+        self.tab = QtGui.QWidget()
         ### Vertical Layout - Playlist Management - Playlists list 
         self.verticalLayoutWidget = QtGui.QWidget(self.tab)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 181, 321))
@@ -167,8 +175,9 @@ class Ui_MainWindow(object):
         self.videoView5 = QtGui.QGraphicsView(self.verticalLayoutWidget_6)
         self.verticalLayout_6.addWidget(self.videoView5)
 
-        #########Tab 2
         self.tabWidget.addTab(self.tab, "")
+        
+        #########Tab 2
         self.tab_2 = QtGui.QWidget()
         #Tab 2 videopreviews
         self.verticalLayoutWidget_4 = QtGui.QWidget(self.tab_2)
@@ -436,4 +445,3 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout.setText(QtGui.QApplication.translate("MainWindow", "About AnimeSTProvider", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad_JSON_auth_file.setText(QtGui.QApplication.translate("MainWindow", "Load JSON auth file", None, QtGui.QApplication.UnicodeUTF8))
-
