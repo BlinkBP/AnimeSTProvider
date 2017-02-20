@@ -8,6 +8,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+<<<<<<< HEAD
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
         ### Main Window
@@ -30,10 +31,42 @@ class Ui_MainWindow(object):
         ######### Tab 1
         self.tab = QtGui.QWidget()
         ### Vertical Layout - Playlist Management - Playlists list 
+=======
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        ### Main Window
+        MainWindow.resize(600, 450)
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(900, 650))
+
+        ### Central Widget
+        self.centralwidget = QtGui.QWidget(MainWindow)
+        #self.centralwidget.setSizePolicy(sizePolicy)
+        self.centralLayout = QtGui.QHBoxLayout()
+        self.centralwidget.setLayout(self.centralLayout)
+
+        ######### Tab 0
+        self.tabWidget = QtGui.QTabWidget(self.centralwidget)
+        self.centralLayout.addWidget(self.tabWidget)
+        self.tab = QtGui.QWidget(self.tabWidget)
+        self.tab0Layout = BorderLayout()
+        self.tab.setLayout(self.tab0Layout)
+
+        ### Vertical Layout - Playlist Management - Playlists list
+>>>>>>> e49d75a8bb42245ce092adc8b4e67f8c26272251
         self.verticalLayoutWidget = QtGui.QWidget(self.tab)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 181, 321))
+        self.tab0Layout.addWidget(self.verticalLayoutWidget, BorderLayout.West)
+        #self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 20, 200, 400))
+        self.verticalLayoutWidget.setSizePolicy(sizePolicy)
+        self.verticalLayoutWidget.setMinimumSize(QtCore.QSize(200,300))
+##Debug widget backgroud color
+        self.verticalLayoutWidget.setAutoFillBackground(True)
+        p = self.verticalLayoutWidget.palette()
+        p.setColor(self.verticalLayoutWidget.backgroundRole(), QtGui.QColor(255,0,0,255))
+        self.verticalLayoutWidget.setPalette(p)
+
         self.verticalLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
-        
+
         self.label = QtGui.QLabel(self.verticalLayoutWidget)
         self.verticalLayout.addWidget(self.label)
 
@@ -46,7 +79,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setSpacing(3)
         self.horizontalLayout.setContentsMargins(0, -1, -1, -1)
-        
+
         self.addPlaylistBtn0 = QtGui.QPushButton(self.verticalLayoutWidget)
         self.horizontalLayout.addWidget(self.addPlaylistBtn0)
 
@@ -57,11 +90,12 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         ###Tab 1 buttons grid
         self.gridLayoutWidget = QtGui.QWidget(self.tab)
+        self.tab0Layout.addWidget(self.gridLayoutWidget, BorderLayout.East)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(370, 10, 681, 551))
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setHorizontalSpacing(6)
         self.gridLayout.setVerticalSpacing(25)
-        
+
         self.deleteFromPlaylistBtn1 = QtGui.QPushButton(self.gridLayoutWidget)
         self.deleteFromPlaylistBtn1.setObjectName("deleteFromPlaylistBtn1")
         self.gridLayout.addWidget(self.deleteFromPlaylistBtn1, 1, 2, 1, 1)
@@ -137,10 +171,11 @@ class Ui_MainWindow(object):
 
         ###Tab 1 arrows
         self.horizontalLayoutWidget_2 = QtGui.QWidget(self.tab)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(610, 560, 232, 31))
+        self.tab0Layout.addWidget(self.horizontalLayoutWidget_2, BorderLayout.South)
+        #self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(610, 560, 232, 31))
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        
+
         self.pagesLabel0 = QtGui.QLabel(self.horizontalLayoutWidget_2)
         self.horizontalLayout_4.addWidget(self.pagesLabel0)
 
@@ -148,15 +183,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addWidget(self.previousPageBtn0)
 
         self.nextPageBtn0 = QtGui.QPushButton(self.horizontalLayoutWidget_2)
-        
+
         self.horizontalLayout_4.addWidget(self.nextPageBtn0)
 
         #Tab1 videopreviews
         self.verticalLayoutWidget_6 = QtGui.QWidget(self.tab)
-        self.verticalLayoutWidget_6.setGeometry(QtCore.QRect(220, 20, 131, 521))
+        self.tab0Layout.addWidget(self.verticalLayoutWidget_6, BorderLayout.Center)
+        #self.verticalLayoutWidget_6.setGeometry(QtCore.QRect(220, 20, 131, 521))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.verticalLayoutWidget_6)
         self.verticalLayout_6.setSpacing(16)
-        
+
         self.videoView0 = QtGui.QGraphicsView(self.verticalLayoutWidget_6)
         self.verticalLayout_6.addWidget(self.videoView0)
 
@@ -179,201 +215,202 @@ class Ui_MainWindow(object):
         
         #########Tab 2
         self.tab_2 = QtGui.QWidget()
-        #Tab 2 videopreviews
-        self.verticalLayoutWidget_4 = QtGui.QWidget(self.tab_2)
-        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(220, 20, 131, 521))
-        self.verticalLayout_4 = QtGui.QVBoxLayout(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.setSpacing(16)
-        
-        self.animeView0 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.addWidget(self.animeView0)
 
-        self.animeView1 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.addWidget(self.animeView1)
+        # #Tab 2 videopreviews
+        # self.verticalLayoutWidget_4 = QtGui.QWidget(self.tab_2)
+        # self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(220, 20, 131, 521))
+        # self.verticalLayout_4 = QtGui.QVBoxLayout(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.setSpacing(16)
 
-        self.animeView2 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.addWidget(self.animeView2)
-
-        self.animeView3 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.addWidget(self.animeView3)
-
-        self.animeView4 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.addWidget(self.animeView4)
-
-        self.animeView5 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
-        self.verticalLayout_4.addWidget(self.animeView5)
-
-        #Tab2 buttons
-        self.gridLayoutWidget_2 = QtGui.QWidget(self.tab_2)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(370, 10, 681, 551))
-        self.gridLayout_2 = QtGui.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_2.setHorizontalSpacing(6)
-        self.gridLayout_2.setVerticalSpacing(25)
-
-        self.addToPlaylistBtn3 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.addToPlaylistBtn3, 3, 2, 1, 1)
-
-        self.animeLabel0 = QtGui.QLabel(self.gridLayoutWidget_2)
-        self.animeLabel0.setLineWidth(1)
-        self.animeLabel0.setText("")
-        self.animeLabel0.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.gridLayout_2.addWidget(self.animeLabel0, 0, 0, 1, 1)
-
-        self.addToPlaylistBtn1 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.addToPlaylistBtn1, 1, 2, 1, 1)
-
-        self.addToPlaylistBtn4 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.addToPlaylistBtn4, 4, 2, 1, 1)
-
-        self.animeLabel4 = QtGui.QLabel(self.gridLayoutWidget_2)
-        self.animeLabel4.setText("")
-        self.animeLabel4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.gridLayout_2.addWidget(self.animeLabel4, 4, 0, 1, 1)
-
-        self.animeLabel3 = QtGui.QLabel(self.gridLayoutWidget_2)
-        self.animeLabel3.setText("")
-        self.animeLabel3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.gridLayout_2.addWidget(self.animeLabel3, 3, 0, 1, 1)
-
-        self.animeLabel2 = QtGui.QLabel(self.gridLayoutWidget_2)
-        self.animeLabel2.setText("")
-        self.animeLabel2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.gridLayout_2.addWidget(self.animeLabel2, 2, 0, 1, 1)
-
-        self.addToPlaylistBtn0 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.addToPlaylistBtn0, 0, 2, 1, 1)
-
-        self.addToPlaylistBtn5 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.addToPlaylistBtn5, 5, 2, 1, 1)
-
-        self.addToPlaylistBtn2 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.addToPlaylistBtn2, 2, 2, 1, 1)
-
-        self.animeLabel5 = QtGui.QLabel(self.gridLayoutWidget_2)
-        self.animeLabel5.setText("")
-        self.animeLabel5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.gridLayout_2.addWidget(self.animeLabel5, 5, 0, 1, 1)
-
-        self.animeLabel1 = QtGui.QLabel(self.gridLayoutWidget_2)
-        self.animeLabel1.setText("")
-        self.animeLabel1.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.gridLayout_2.addWidget(self.animeLabel1, 1, 0, 1, 1)
-
-        self.videoPreviewBtn0 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.videoPreviewBtn0, 0, 1, 1, 1)
-
-        self.videoPreviewBtn1 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.videoPreviewBtn1, 1, 1, 1, 1)
-
-        self.videoPreviewBtn2 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.videoPreviewBtn2, 2, 1, 1, 1)
-
-        self.videoPreviewBtn3 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.videoPreviewBtn3, 3, 1, 1, 1)
-
-        self.videoPreviewBtn4 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.videoPreviewBtn4, 4, 1, 1, 1)
-
-        self.videoPreviewBtn5 = QtGui.QPushButton(self.gridLayoutWidget_2)
-        self.gridLayout_2.addWidget(self.videoPreviewBtn5, 5, 1, 1, 1)
-
-        #Tab 2 'your playlists'
-        self.verticalLayoutWidget_3 = QtGui.QWidget(self.tab_2)
-        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(10, 10, 181, 201))
-        self.verticalLayout_3 = QtGui.QVBoxLayout(self.verticalLayoutWidget_3)
-        #self.verticalLayout_3.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        
-        self.label_8 = QtGui.QLabel(self.verticalLayoutWidget_3)
-        self.verticalLayout_3.addWidget(self.label_8)
-
-        self.userPlaylistsList1 = QtGui.QListWidget(self.verticalLayoutWidget_3)
-        self.verticalLayout_3.addWidget(self.userPlaylistsList1)
-
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setSpacing(3)
-        self.horizontalLayout_2.setContentsMargins(0, -1, -1, -1)
-        
-        self.addPlaylistBtn1 = QtGui.QPushButton(self.verticalLayoutWidget_3)
-        self.horizontalLayout_2.addWidget(self.addPlaylistBtn1)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
-
-        self.verticalLayoutWidget_5 = QtGui.QWidget(self.tab_2)
-        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(10, 220, 188, 321))
-        self.verticalLayout_5 = QtGui.QVBoxLayout(self.verticalLayoutWidget_5)
-        self.verticalLayout_5.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
-        
-        self.label_15 = QtGui.QLabel(self.verticalLayoutWidget_5)
-        self.verticalLayout_5.addWidget(self.label_15)
-
-        self.animeListWidget = QtGui.QListWidget(self.verticalLayoutWidget_5)
-        self.verticalLayout_5.addWidget(self.animeListWidget)
-
-        self.horizontalLayout_6 = QtGui.QHBoxLayout()
-        self.horizontalLayout_6.setSpacing(3)
-        self.horizontalLayout_6.setContentsMargins(0, -1, -1, -1)
-        
-        self.addAnimeBtn = QtGui.QPushButton(self.verticalLayoutWidget_5)
-        self.horizontalLayout_6.addWidget(self.addAnimeBtn)
-
-        self.deleteAnimeBtn = QtGui.QPushButton(self.verticalLayoutWidget_5)
-        self.horizontalLayout_6.addWidget(self.deleteAnimeBtn)
-        self.verticalLayout_5.addLayout(self.horizontalLayout_6)
-
-        self.label_2 = QtGui.QLabel(self.verticalLayoutWidget_5)
-        self.verticalLayout_5.addWidget(self.label_2)
-
-        self.label_3 = QtGui.QLabel(self.verticalLayoutWidget_5)
-        self.verticalLayout_5.addWidget(self.label_3)
-
-        self.addTextLabel = QtGui.QLineEdit(self.verticalLayoutWidget_5)
-        self.verticalLayout_5.addWidget(self.addTextLabel)
-
-        self.horizontalLayout_3 = QtGui.QHBoxLayout()
-        self.horizontalLayout_3.setSpacing(3)
-        self.horizontalLayout_3.setContentsMargins(0, -1, -1, -1)
-        
-        self.searchYTBtn = QtGui.QPushButton(self.verticalLayoutWidget_5)
-        self.horizontalLayout_3.addWidget(self.searchYTBtn)
-        self.verticalLayout_5.addLayout(self.horizontalLayout_3)
-
-        self.horizontalLayoutWidget_3 = QtGui.QWidget(self.tab_2)
-        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(610, 560, 232, 31))
-        self.horizontalLayout_5 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_3)
-        
-        self.pagesLabel1 = QtGui.QLabel(self.horizontalLayoutWidget_3)
-        self.horizontalLayout_5.addWidget(self.pagesLabel1)
-
-        self.previousPageBtn1 = QtGui.QPushButton(self.horizontalLayoutWidget_3)
-        self.horizontalLayout_5.addWidget(self.previousPageBtn1)
-
-        self.nextPageBtn1 = QtGui.QPushButton(self.horizontalLayoutWidget_3)
-        self.horizontalLayout_5.addWidget(self.nextPageBtn1)
-
+        # self.animeView0 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.addWidget(self.animeView0)
+        #
+        # self.animeView1 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.addWidget(self.animeView1)
+        #
+        # self.animeView2 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.addWidget(self.animeView2)
+        #
+        # self.animeView3 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.addWidget(self.animeView3)
+        #
+        # self.animeView4 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.addWidget(self.animeView4)
+        #
+        # self.animeView5 = QtGui.QGraphicsView(self.verticalLayoutWidget_4)
+        # self.verticalLayout_4.addWidget(self.animeView5)
+        #
+        # #Tab2 buttons
+        # self.gridLayoutWidget_2 = QtGui.QWidget(self.tab_2)
+        # self.gridLayoutWidget_2.setGeometry(QtCore.QRect(370, 10, 681, 551))
+        # self.gridLayout_2 = QtGui.QGridLayout(self.gridLayoutWidget_2)
+        # self.gridLayout_2.setHorizontalSpacing(6)
+        # self.gridLayout_2.setVerticalSpacing(25)
+        #
+        # self.addToPlaylistBtn3 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.addToPlaylistBtn3, 3, 2, 1, 1)
+        #
+        # self.animeLabel0 = QtGui.QLabel(self.gridLayoutWidget_2)
+        # self.animeLabel0.setLineWidth(1)
+        # self.animeLabel0.setText("")
+        # self.animeLabel0.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        # self.gridLayout_2.addWidget(self.animeLabel0, 0, 0, 1, 1)
+        #
+        # self.addToPlaylistBtn1 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.addToPlaylistBtn1, 1, 2, 1, 1)
+        #
+        # self.addToPlaylistBtn4 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.addToPlaylistBtn4, 4, 2, 1, 1)
+        #
+        # self.animeLabel4 = QtGui.QLabel(self.gridLayoutWidget_2)
+        # self.animeLabel4.setText("")
+        # self.animeLabel4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        # self.gridLayout_2.addWidget(self.animeLabel4, 4, 0, 1, 1)
+        #
+        # self.animeLabel3 = QtGui.QLabel(self.gridLayoutWidget_2)
+        # self.animeLabel3.setText("")
+        # self.animeLabel3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        # self.gridLayout_2.addWidget(self.animeLabel3, 3, 0, 1, 1)
+        #
+        # self.animeLabel2 = QtGui.QLabel(self.gridLayoutWidget_2)
+        # self.animeLabel2.setText("")
+        # self.animeLabel2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        # self.gridLayout_2.addWidget(self.animeLabel2, 2, 0, 1, 1)
+        #
+        # self.addToPlaylistBtn0 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.addToPlaylistBtn0, 0, 2, 1, 1)
+        #
+        # self.addToPlaylistBtn5 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.addToPlaylistBtn5, 5, 2, 1, 1)
+        #
+        # self.addToPlaylistBtn2 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.addToPlaylistBtn2, 2, 2, 1, 1)
+        #
+        # self.animeLabel5 = QtGui.QLabel(self.gridLayoutWidget_2)
+        # self.animeLabel5.setText("")
+        # self.animeLabel5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        # self.gridLayout_2.addWidget(self.animeLabel5, 5, 0, 1, 1)
+        #
+        # self.animeLabel1 = QtGui.QLabel(self.gridLayoutWidget_2)
+        # self.animeLabel1.setText("")
+        # self.animeLabel1.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        # self.gridLayout_2.addWidget(self.animeLabel1, 1, 0, 1, 1)
+        #
+        # self.videoPreviewBtn0 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.videoPreviewBtn0, 0, 1, 1, 1)
+        #
+        # self.videoPreviewBtn1 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.videoPreviewBtn1, 1, 1, 1, 1)
+        #
+        # self.videoPreviewBtn2 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.videoPreviewBtn2, 2, 1, 1, 1)
+        #
+        # self.videoPreviewBtn3 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.videoPreviewBtn3, 3, 1, 1, 1)
+        #
+        # self.videoPreviewBtn4 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.videoPreviewBtn4, 4, 1, 1, 1)
+        #
+        # self.videoPreviewBtn5 = QtGui.QPushButton(self.gridLayoutWidget_2)
+        # self.gridLayout_2.addWidget(self.videoPreviewBtn5, 5, 1, 1, 1)
+        #
+        # #Tab 2 'your playlists'
+        # self.verticalLayoutWidget_3 = QtGui.QWidget(self.tab_2)
+        # self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(10, 10, 181, 201))
+        # self.verticalLayout_3 = QtGui.QVBoxLayout(self.verticalLayoutWidget_3)
+        # #self.verticalLayout_3.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
+        # self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        #
+        # self.label_8 = QtGui.QLabel(self.verticalLayoutWidget_3)
+        # self.verticalLayout_3.addWidget(self.label_8)
+        #
+        # self.userPlaylistsList1 = QtGui.QListWidget(self.verticalLayoutWidget_3)
+        # self.verticalLayout_3.addWidget(self.userPlaylistsList1)
+        #
+        # self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        # self.horizontalLayout_2.setSpacing(3)
+        # self.horizontalLayout_2.setContentsMargins(0, -1, -1, -1)
+        #
+        # self.addPlaylistBtn1 = QtGui.QPushButton(self.verticalLayoutWidget_3)
+        # self.horizontalLayout_2.addWidget(self.addPlaylistBtn1)
+        # self.verticalLayout_3.addLayout(self.horizontalLayout_2)
+        #
+        # self.verticalLayoutWidget_5 = QtGui.QWidget(self.tab_2)
+        # self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(10, 220, 188, 321))
+        # self.verticalLayout_5 = QtGui.QVBoxLayout(self.verticalLayoutWidget_5)
+        # self.verticalLayout_5.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
+        #
+        # self.label_15 = QtGui.QLabel(self.verticalLayoutWidget_5)
+        # self.verticalLayout_5.addWidget(self.label_15)
+        #
+        # self.animeListWidget = QtGui.QListWidget(self.verticalLayoutWidget_5)
+        # self.verticalLayout_5.addWidget(self.animeListWidget)
+        #
+        # self.horizontalLayout_6 = QtGui.QHBoxLayout()
+        # self.horizontalLayout_6.setSpacing(3)
+        # self.horizontalLayout_6.setContentsMargins(0, -1, -1, -1)
+        #
+        # self.addAnimeBtn = QtGui.QPushButton(self.verticalLayoutWidget_5)
+        # self.horizontalLayout_6.addWidget(self.addAnimeBtn)
+        #
+        # self.deleteAnimeBtn = QtGui.QPushButton(self.verticalLayoutWidget_5)
+        # self.horizontalLayout_6.addWidget(self.deleteAnimeBtn)
+        # self.verticalLayout_5.addLayout(self.horizontalLayout_6)
+        #
+        # self.label_2 = QtGui.QLabel(self.verticalLayoutWidget_5)
+        # self.verticalLayout_5.addWidget(self.label_2)
+        #
+        # self.label_3 = QtGui.QLabel(self.verticalLayoutWidget_5)
+        # self.verticalLayout_5.addWidget(self.label_3)
+        #
+        # self.addTextLabel = QtGui.QLineEdit(self.verticalLayoutWidget_5)
+        # self.verticalLayout_5.addWidget(self.addTextLabel)
+        #
+        # self.horizontalLayout_3 = QtGui.QHBoxLayout()
+        # self.horizontalLayout_3.setSpacing(3)
+        # self.horizontalLayout_3.setContentsMargins(0, -1, -1, -1)
+        #
+        # self.searchYTBtn = QtGui.QPushButton(self.verticalLayoutWidget_5)
+        # self.horizontalLayout_3.addWidget(self.searchYTBtn)
+        # self.verticalLayout_5.addLayout(self.horizontalLayout_3)
+        #
+        # self.horizontalLayoutWidget_3 = QtGui.QWidget(self.tab_2)
+        # self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(610, 560, 232, 31))
+        # self.horizontalLayout_5 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_3)
+        #
+        # self.pagesLabel1 = QtGui.QLabel(self.horizontalLayoutWidget_3)
+        # self.horizontalLayout_5.addWidget(self.pagesLabel1)
+        #
+        # self.previousPageBtn1 = QtGui.QPushButton(self.horizontalLayoutWidget_3)
+        # self.horizontalLayout_5.addWidget(self.previousPageBtn1)
+        #
+        # self.nextPageBtn1 = QtGui.QPushButton(self.horizontalLayoutWidget_3)
+        # self.horizontalLayout_5.addWidget(self.nextPageBtn1)
+        #
         self.tabWidget.addTab(self.tab_2, "")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1090, 21))
-        
+
         self.menuFile = QtGui.QMenu(self.menubar)
-        
+
         self.menuAbout = QtGui.QMenu(self.menubar)
-        
+
         MainWindow.setMenuBar(self.menubar)
 
         self.statusbar = QtGui.QStatusBar(MainWindow)
-        
+
         MainWindow.setStatusBar(self.statusbar)
 
         self.actionOpen_HTML = QtGui.QAction(MainWindow)
-        
+
         self.actionExit = QtGui.QAction(MainWindow)
-        
+
         self.actionAbout = QtGui.QAction(MainWindow)
-        
+
         self.actionLoad_JSON_auth_file = QtGui.QAction(MainWindow)
-        
+
         self.menuFile.addAction(self.actionLoad_JSON_auth_file)
         self.menuFile.addAction(self.actionOpen_HTML)
         self.menuFile.addSeparator()
@@ -386,7 +423,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        #self.tabWidget.setCurrentIndex(1)
 
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL("triggered()"), MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -413,31 +450,31 @@ class Ui_MainWindow(object):
         self.previousPageBtn0.setText(QtGui.QApplication.translate("MainWindow", "<---", None, QtGui.QApplication.UnicodeUTF8))
         self.nextPageBtn0.setText(QtGui.QApplication.translate("MainWindow", "--->", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Playlist management", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn3.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn4.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn0.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn5.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn2.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn0.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn1.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn2.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn3.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn4.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn5.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Your playlists:", None, QtGui.QApplication.UnicodeUTF8))
-        self.addPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("MainWindow", "Found animes:", None, QtGui.QApplication.UnicodeUTF8))
-        self.addAnimeBtn.setToolTip(QtGui.QApplication.translate("MainWindow", "Add anime to this list", None, QtGui.QApplication.UnicodeUTF8))
-        self.addAnimeBtn.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteAnimeBtn.setToolTip(QtGui.QApplication.translate("MainWindow", "Delete anime from this list", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteAnimeBtn.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Text to add at the end of anime title:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "(like OP, ED or OST)", None, QtGui.QApplication.UnicodeUTF8))
-        self.searchYTBtn.setText(QtGui.QApplication.translate("MainWindow", "Search YouTube", None, QtGui.QApplication.UnicodeUTF8))
-        self.pagesLabel1.setText(QtGui.QApplication.translate("MainWindow", "0/0", None, QtGui.QApplication.UnicodeUTF8))
-        self.previousPageBtn1.setText(QtGui.QApplication.translate("MainWindow", "<---", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextPageBtn1.setText(QtGui.QApplication.translate("MainWindow", "--->", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addToPlaylistBtn3.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addToPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addToPlaylistBtn4.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addToPlaylistBtn0.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addToPlaylistBtn5.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addToPlaylistBtn2.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
+        # self.videoPreviewBtn0.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
+        # self.videoPreviewBtn1.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
+        # self.videoPreviewBtn2.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
+        # self.videoPreviewBtn3.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
+        # self.videoPreviewBtn4.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
+        # self.videoPreviewBtn5.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
+        # self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Your playlists:", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
+        # self.label_15.setText(QtGui.QApplication.translate("MainWindow", "Found animes:", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addAnimeBtn.setToolTip(QtGui.QApplication.translate("MainWindow", "Add anime to this list", None, QtGui.QApplication.UnicodeUTF8))
+        # self.addAnimeBtn.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
+        # self.deleteAnimeBtn.setToolTip(QtGui.QApplication.translate("MainWindow", "Delete anime from this list", None, QtGui.QApplication.UnicodeUTF8))
+        # self.deleteAnimeBtn.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
+        # self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Text to add at the end of anime title:", None, QtGui.QApplication.UnicodeUTF8))
+        # self.label_3.setText(QtGui.QApplication.translate("MainWindow", "(like OP, ED or OST)", None, QtGui.QApplication.UnicodeUTF8))
+        # self.searchYTBtn.setText(QtGui.QApplication.translate("MainWindow", "Search YouTube", None, QtGui.QApplication.UnicodeUTF8))
+        # self.pagesLabel1.setText(QtGui.QApplication.translate("MainWindow", "0/0", None, QtGui.QApplication.UnicodeUTF8))
+        # self.previousPageBtn1.setText(QtGui.QApplication.translate("MainWindow", "<---", None, QtGui.QApplication.UnicodeUTF8))
+        # self.nextPageBtn1.setText(QtGui.QApplication.translate("MainWindow", "--->", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("MainWindow", "Anime ST Search", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAbout.setTitle(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
@@ -445,3 +482,145 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout.setText(QtGui.QApplication.translate("MainWindow", "About AnimeSTProvider", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad_JSON_auth_file.setText(QtGui.QApplication.translate("MainWindow", "Load JSON auth file", None, QtGui.QApplication.UnicodeUTF8))
+<<<<<<< HEAD
+=======
+
+class BorderLayout(QtGui.QLayout):
+    West, North, South, East, Center = range(5)
+    MinimumSize, SizeHint = range(2)
+
+    def __init__(self, parent=None, margin=0, spacing=-1):
+        super(BorderLayout, self).__init__(parent)
+
+        self.setContentsMargins(margin, margin, margin, margin)
+        self.setSpacing(spacing)
+        self.list = []
+
+    def __del__(self):
+        l = self.takeAt(0)
+        while l:
+            l = self.takeAt(0)
+
+    def addItem(self, item):
+        self.add(item, BorderLayout.West)
+
+    def addWidget(self, widget, position):
+        self.add(QtGui.QWidgetItem(widget), position)
+
+    def expandingDirections(self):
+        return QtCore.Qt.Horizontal | QtCore.Qt.Vertical
+
+    def hasHeightForWidth(self):
+        return False
+
+    def count(self):
+        return len(self.list)
+
+    def itemAt(self, index):
+        if index < len(self.list):
+            return self.list[index].item
+
+        return None
+
+    def minimumSize(self):
+        return self.calculateSize(BorderLayout.MinimumSize)
+
+    def setGeometry(self, rect):
+        center = None
+        eastWidth = 0
+        westWidth = 0
+        northHeight = 0
+        southHeight = 0
+        centerHeight = 0
+
+        super(BorderLayout, self).setGeometry(rect)
+
+        for wrapper in self.list:
+            item = wrapper.item
+            position = wrapper.position
+
+            if position == BorderLayout.North:
+                item.setGeometry(QtCore.QRect(rect.x(), northHeight,
+                        rect.width(), item.sizeHint().height()))
+
+                northHeight += item.geometry().height() + self.spacing()
+
+            elif position == BorderLayout.South:
+                item.setGeometry(QtCore.QRect(item.geometry().x(),
+                        item.geometry().y(), rect.width(),
+                        item.sizeHint().height()))
+
+                southHeight += item.geometry().height() + self.spacing()
+
+                item.setGeometry(QtCore.QRect(rect.x(),
+                        rect.y() + rect.height() - southHeight + self.spacing(),
+                        item.geometry().width(), item.geometry().height()))
+
+            elif position == BorderLayout.Center:
+                center = wrapper
+
+        centerHeight = rect.height() - northHeight - southHeight
+
+        for wrapper in self.list:
+            item = wrapper.item
+            position = wrapper.position
+
+            if position == BorderLayout.West:
+                item.setGeometry(QtCore.QRect(rect.x() + westWidth,
+                        northHeight, item.sizeHint().width(), centerHeight))
+
+                westWidth += item.geometry().width() + self.spacing()
+
+            elif position == BorderLayout.East:
+                item.setGeometry(QtCore.QRect(item.geometry().x(),
+                        item.geometry().y(), item.sizeHint().width(),
+                        centerHeight))
+
+                eastWidth += item.geometry().width() + self.spacing()
+
+                item.setGeometry(QtCore.QRect(rect.x() + rect.width() - eastWidth + self.spacing(),
+                        northHeight, item.geometry().width(),
+                        item.geometry().height()))
+
+        if center:
+            center.item.setGeometry(QtCore.QRect(westWidth, northHeight,
+                    rect.width() - eastWidth - westWidth, centerHeight))
+
+    def sizeHint(self):
+        return self.calculateSize(BorderLayout.SizeHint)
+
+    def takeAt(self, index):
+        if index >= 0 and index < len(self.list):
+            layoutStruct = self.list.pop(index)
+            return layoutStruct.item
+
+        return None
+
+    def add(self, item, position):
+        self.list.append(ItemWrapper(item, position))
+
+    def calculateSize(self, sizeType):
+        totalSize = QtCore.QSize()
+
+        for wrapper in self.list:
+            position = wrapper.position
+            itemSize = QtCore.QSize()
+
+            if sizeType == BorderLayout.MinimumSize:
+                itemSize = wrapper.item.minimumSize()
+            else: # sizeType == BorderLayout.SizeHint
+                itemSize = wrapper.item.sizeHint()
+
+            if position in (BorderLayout.North, BorderLayout.South, BorderLayout.Center):
+                totalSize.setHeight(totalSize.height() + itemSize.height())
+
+            if position in (BorderLayout.West, BorderLayout.East, BorderLayout.Center):
+                totalSize.setWidth(totalSize.width() + itemSize.width())
+
+        return totalSize
+
+class ItemWrapper(object):
+    def __init__(self, i, p):
+        self.item = i
+        self.position = p
+>>>>>>> e49d75a8bb42245ce092adc8b4e67f8c26272251

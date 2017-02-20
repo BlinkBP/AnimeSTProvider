@@ -17,90 +17,90 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        #Arrays
-        self.animeScenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
-                QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
-        self.videoScenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
-                QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
-        self.animeViews = [self.animeView0, self.animeView1, self.animeView2,
-                self.animeView3, self.animeView4, self.animeView5]
-        self.videoViews = [self.videoView0, self.videoView1, self.videoView2,
-                self.videoView3, self.videoView4, self.videoView5]
-        self.animeLabels = [self.animeLabel0, self.animeLabel1, self.animeLabel2,
-                self.animeLabel3, self.animeLabel4, self.animeLabel5]
-        self.videoLabels = [self.videoLabel0, self.videoLabel1, self.videoLabel2,
-                self.videoLabel3, self.videoLabel4, self.videoLabel5]
-        # Menu
-        self.actionOpen_HTML.triggered.connect(self.open_HTML)
-        self.actionAbout.triggered.connect(self.show_about)
-        self.actionLoad_JSON_auth_file.triggered.connect(self.log_in)
-        # Buttons
-        self.closeBtn = QPushButton()
-        self.deleteAnimeBtn.clicked.connect(self.delete_anime)
-        self.addAnimeBtn.clicked.connect(self.add_anime)
-        self.searchYTBtn.clicked.connect(self.search)
-        self.addPlaylistBtn0.clicked.connect(self.create_playlist)
-        self.addPlaylistBtn1.clicked.connect(self.create_playlist)
-        self.deletePlaylistBtn.clicked.connect(self.delete_playlist)
-        self.loadPlaylistBtn.clicked.connect(self.load_playlist)
-        self.videoPreviewBtn0.clicked.connect(self.preview)
-        self.videoPreviewBtn1.clicked.connect(self.preview)
-        self.videoPreviewBtn2.clicked.connect(self.preview)
-        self.videoPreviewBtn3.clicked.connect(self.preview)
-        self.videoPreviewBtn4.clicked.connect(self.preview)
-        self.videoPreviewBtn5.clicked.connect(self.preview)
-        self.playlistVideoPreviewBtn0.clicked.connect(self.preview)
-        self.playlistVideoPreviewBtn1.clicked.connect(self.preview)
-        self.playlistVideoPreviewBtn2.clicked.connect(self.preview)
-        self.playlistVideoPreviewBtn3.clicked.connect(self.preview)
-        self.playlistVideoPreviewBtn4.clicked.connect(self.preview)
-        self.playlistVideoPreviewBtn5.clicked.connect(self.preview)
-        self.addToPlaylistBtn0.clicked.connect(self.add_video_to_playlist)
-        self.addToPlaylistBtn1.clicked.connect(self.add_video_to_playlist)
-        self.addToPlaylistBtn2.clicked.connect(self.add_video_to_playlist)
-        self.addToPlaylistBtn3.clicked.connect(self.add_video_to_playlist)
-        self.addToPlaylistBtn4.clicked.connect(self.add_video_to_playlist)
-        self.addToPlaylistBtn5.clicked.connect(self.add_video_to_playlist)
-        self.deleteFromPlaylistBtn0.clicked.connect(self.delete_video_from_playlist)
-        self.deleteFromPlaylistBtn1.clicked.connect(self.delete_video_from_playlist)
-        self.deleteFromPlaylistBtn2.clicked.connect(self.delete_video_from_playlist)
-        self.deleteFromPlaylistBtn3.clicked.connect(self.delete_video_from_playlist)
-        self.deleteFromPlaylistBtn4.clicked.connect(self.delete_video_from_playlist)
-        self.deleteFromPlaylistBtn5.clicked.connect(self.delete_video_from_playlist)
-        self.nextPageBtn0.clicked.connect(self.nextPage)
-        self.nextPageBtn1.clicked.connect(self.nextPage)
-        self.previousPageBtn0.clicked.connect(self.previousPage)
-        self.previousPageBtn1.clicked.connect(self.previousPage)
-        self.closeBtn.clicked.connect(self.destroy_preview)
-        #Variables
-        self.playlistIds = []
-        self.playlistVideoUrlIds = []
-        self.playlistVideoIds = []
-        self.playlistVideoTitles = []
-        self.playlistVideoThumbnails = []
-        self.videoUrlIds = []
-        self.videoIds = []
-        self.videoTitles = []
-        self.videoThumbnails = []
-        self.currentPlaylistRow = 0
-        self.currentAnimeRow = 0
-        self.totalVideoPages = 0
-        self.totalPlaylistPages = 0
-        self.currentVideoPage = 0
-        self.currentPlaylistPage = 0
-        #Events
-        self.userPlaylistsList0.itemClicked.connect(self.on_playlist_row_changed)
-        self.userPlaylistsList1.itemClicked.connect(self.on_playlist_row_changed)
-        self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
-        #Icons
-        self.icon = QIcon("assets/icon.png")
-        #Misc
-        self.previewWindow = QWidget()
-        self.webView = QWebView()
-
-        self.setWindowIcon(self.icon)
-        self.initialize_thumbnails()
-        self.initialize_preview()
+        # #Arrays
+        # self.animeScenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
+        #         QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
+        # self.videoScenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
+        #         QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
+        # self.animeViews = [self.animeView0, self.animeView1, self.animeView2,
+        #         self.animeView3, self.animeView4, self.animeView5]
+        # self.videoViews = [self.videoView0, self.videoView1, self.videoView2,
+        #         self.videoView3, self.videoView4, self.videoView5]
+        # self.animeLabels = [self.animeLabel0, self.animeLabel1, self.animeLabel2,
+        #         self.animeLabel3, self.animeLabel4, self.animeLabel5]
+        # self.videoLabels = [self.videoLabel0, self.videoLabel1, self.videoLabel2,
+        #         self.videoLabel3, self.videoLabel4, self.videoLabel5]
+        # # Menu
+        # self.actionOpen_HTML.triggered.connect(self.open_HTML)
+        # self.actionAbout.triggered.connect(self.show_about)
+        # self.actionLoad_JSON_auth_file.triggered.connect(self.log_in)
+        # # Buttons
+        # self.closeBtn = QPushButton()
+        # self.deleteAnimeBtn.clicked.connect(self.delete_anime)
+        # self.addAnimeBtn.clicked.connect(self.add_anime)
+        # self.searchYTBtn.clicked.connect(self.search)
+        # self.addPlaylistBtn0.clicked.connect(self.create_playlist)
+        # self.addPlaylistBtn1.clicked.connect(self.create_playlist)
+        # self.deletePlaylistBtn.clicked.connect(self.delete_playlist)
+        # self.loadPlaylistBtn.clicked.connect(self.load_playlist)
+        # self.videoPreviewBtn0.clicked.connect(self.preview)
+        # self.videoPreviewBtn1.clicked.connect(self.preview)
+        # self.videoPreviewBtn2.clicked.connect(self.preview)
+        # self.videoPreviewBtn3.clicked.connect(self.preview)
+        # self.videoPreviewBtn4.clicked.connect(self.preview)
+        # self.videoPreviewBtn5.clicked.connect(self.preview)
+        # self.playlistVideoPreviewBtn0.clicked.connect(self.preview)
+        # self.playlistVideoPreviewBtn1.clicked.connect(self.preview)
+        # self.playlistVideoPreviewBtn2.clicked.connect(self.preview)
+        # self.playlistVideoPreviewBtn3.clicked.connect(self.preview)
+        # self.playlistVideoPreviewBtn4.clicked.connect(self.preview)
+        # self.playlistVideoPreviewBtn5.clicked.connect(self.preview)
+        # self.addToPlaylistBtn0.clicked.connect(self.add_video_to_playlist)
+        # self.addToPlaylistBtn1.clicked.connect(self.add_video_to_playlist)
+        # self.addToPlaylistBtn2.clicked.connect(self.add_video_to_playlist)
+        # self.addToPlaylistBtn3.clicked.connect(self.add_video_to_playlist)
+        # self.addToPlaylistBtn4.clicked.connect(self.add_video_to_playlist)
+        # self.addToPlaylistBtn5.clicked.connect(self.add_video_to_playlist)
+        # self.deleteFromPlaylistBtn0.clicked.connect(self.delete_video_from_playlist)
+        # self.deleteFromPlaylistBtn1.clicked.connect(self.delete_video_from_playlist)
+        # self.deleteFromPlaylistBtn2.clicked.connect(self.delete_video_from_playlist)
+        # self.deleteFromPlaylistBtn3.clicked.connect(self.delete_video_from_playlist)
+        # self.deleteFromPlaylistBtn4.clicked.connect(self.delete_video_from_playlist)
+        # self.deleteFromPlaylistBtn5.clicked.connect(self.delete_video_from_playlist)
+        # self.nextPageBtn0.clicked.connect(self.nextPage)
+        # self.nextPageBtn1.clicked.connect(self.nextPage)
+        # self.previousPageBtn0.clicked.connect(self.previousPage)
+        # self.previousPageBtn1.clicked.connect(self.previousPage)
+        # self.closeBtn.clicked.connect(self.destroy_preview)
+        # #Variables
+        # self.playlistIds = []
+        # self.playlistVideoUrlIds = []
+        # self.playlistVideoIds = []
+        # self.playlistVideoTitles = []
+        # self.playlistVideoThumbnails = []
+        # self.videoUrlIds = []
+        # self.videoIds = []
+        # self.videoTitles = []
+        # self.videoThumbnails = []
+        # self.currentPlaylistRow = 0
+        # self.currentAnimeRow = 0
+        # self.totalVideoPages = 0
+        # self.totalPlaylistPages = 0
+        # self.currentVideoPage = 0
+        # self.currentPlaylistPage = 0
+        # #Events
+        # self.userPlaylistsList0.itemClicked.connect(self.on_playlist_row_changed)
+        # self.userPlaylistsList1.itemClicked.connect(self.on_playlist_row_changed)
+        # self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
+        # #Icons
+        # self.icon = QIcon("assets/icon.png")
+        # #Misc
+        # self.previewWindow = QWidget()
+        # self.webView = QWebView()
+        #
+        # self.setWindowIcon(self.icon)
+        # self.initialize_thumbnails()
+        # self.initialize_preview()
 
     def initialize_thumbnails(self):
 
@@ -453,7 +453,7 @@ class Window(QMainWindow, Ui_MainWindow):
             <p>Python {} - PySide version {} - Qt version {}"""
             .format(platform.python_version(),
                 PySide.__version__,
-                PySide.QtCore.__version__, 
+                PySide.QtCore.__version__,
                 )
             )
 
