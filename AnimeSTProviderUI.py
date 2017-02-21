@@ -49,164 +49,60 @@ class Ui_MainWindow(object):
         self.tab0Layout = BorderLayout()
         self.tab.setLayout(self.tab0Layout)
 
-        #Tab 0 videopreviews
-        self.tab0VideoPrevWidget = QtGui.QWidget(self.tab)
-        #self.tab0VideoPrevWidget.setMaximumWidth(240)
-        self.tab0Layout.addWidget(self.tab0VideoPrevWidget, BorderLayout.Center)
-        self.tab0VideoPrevLayout = QtGui.QVBoxLayout(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.setSpacing(16)
+        ##Tab 0 right side Layout
+        self.tab0RightWidget = QtGui.QWidget(self.tab)
+        self.tab0RightLayout = QtGui.QVBoxLayout(self.tab0RightWidget)
 
-        self.videoView0 = QGraphicsView(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.addWidget(self.videoView0)
+        self.tab0RightScrollArea = QtGui.QScrollArea(self.tab0RightWidget)
+        self.tab0RightLayout.addWidget(self.tab0RightScrollArea)
+        self.tab0Layout.addWidget(self.tab0RightWidget, BorderLayout.Center)
 
-        self.videoView1 = QGraphicsView(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.addWidget(self.videoView1)
+        self.tab0RightContainerWidget = QtGui.QWidget(self.tab0RightScrollArea)
+        self.tab0RightContainerWidget.setLayout(QtGui.QVBoxLayout(self.tab0RightContainerWidget))
 
-        self.videoView2 = QGraphicsView(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.addWidget(self.videoView2)
+        self.tab0RightScrollArea.setWidget(self.tab0RightContainerWidget)
+        self.tab0RightScrollArea.setWidgetResizable(True)
 
-        self.videoView3 = QGraphicsView(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.addWidget(self.videoView3)
-
-        self.videoView4 = QGraphicsView(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.addWidget(self.videoView4)
-
-        self.videoView5 = QGraphicsView(self.tab0VideoPrevWidget)
-        self.tab0VideoPrevLayout.addWidget(self.videoView5)
-
-        #Tab 0 labels
-        self.tab0GridWidget = QtGui.QWidget(self.tab)
-        self.tab0Layout.addWidget(self.tab0GridWidget, BorderLayout.East)
-        self.tab0GridLayout = QtGui.QGridLayout(self.tab0GridWidget)
-        self.tab0GridLayout.setHorizontalSpacing(6)
-        self.tab0GridLayout.setVerticalSpacing(25)
-
-        self.videoLabel0 = QtGui.QLabel(self.tab0GridWidget)
-        self.videoLabel0.setLineWidth(1)
-        self.videoLabel0.setText("")
-        self.videoLabel0.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.tab0GridLayout.addWidget(self.videoLabel0, 0, 0, 1, 1)
-
-        self.videoLabel1 = QtGui.QLabel(self.tab0GridWidget)
-        self.videoLabel1.setText("")
-        self.videoLabel1.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.tab0GridLayout.addWidget(self.videoLabel1, 1, 0, 1, 1)
-
-        self.videoLabel2 = QtGui.QLabel(self.tab0GridWidget)
-        self.videoLabel2.setText("")
-        self.videoLabel2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.tab0GridLayout.addWidget(self.videoLabel2, 2, 0, 1, 1)
-
-        self.videoLabel3 = QtGui.QLabel(self.tab0GridWidget)
-        self.videoLabel3.setText("")
-        self.videoLabel3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.tab0GridLayout.addWidget(self.videoLabel3, 3, 0, 1, 1)
-
-        self.videoLabel4 = QtGui.QLabel(self.tab0GridWidget)
-        self.videoLabel4.setText("")
-        self.videoLabel4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.tab0GridLayout.addWidget(self.videoLabel4, 4, 0, 1, 1)
-
-        self.videoLabel5 = QtGui.QLabel(self.tab0GridWidget)
-        self.videoLabel5.setText("")
-        self.videoLabel5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.tab0GridLayout.addWidget(self.videoLabel5, 5, 0, 1, 1)
-
-        ### Vertical Layout - Playlist Management - Playlists list
-        self.verticalLayoutWidget = QtGui.QWidget(self.tab)
-        self.tab0Layout.addWidget(self.verticalLayoutWidget, BorderLayout.West)
-        #self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 20, 200, 400))
-        self.verticalLayoutWidget.setSizePolicy(sizePolicy)
-        self.verticalLayoutWidget.setMinimumSize(QtCore.QSize(200,300))
+        ###Tab 0 Playlist Management
+        self.tab0LeftWidget = QtGui.QWidget(self.tab)
+        self.tab0Layout.addWidget(self.tab0LeftWidget, BorderLayout.West)
+        #self.tab0LeftWidget.setSizePolicy(sizePolicy)
+        #self.tab0LeftWidget.setMinimumSize(QtCore.QSize(200,300))
 ##Debug widget backgroud color
         #self.verticalLayoutWidget.setAutoFillBackground(True)
         #p = self.verticalLayoutWidget.palette()
         #p.setColor(self.verticalLayoutWidget.backgroundRole(), QtGui.QColor(255,0,0,255))
         #self.verticalLayoutWidget.setPalette(p)
+        self.tab0LeftLayout = QtGui.QVBoxLayout(self.tab0LeftWidget)
 
-        self.verticalLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.tab0yourPlaylistsLabel = QtGui.QLabel(self.tab0LeftWidget)
+        self.tab0LeftLayout.addWidget(self.tab0yourPlaylistsLabel)
+        self.tab0userPlaylistsList = QtGui.QListWidget(self.tab0LeftWidget)
+        self.tab0LeftLayout.addWidget(self.tab0userPlaylistsList)
+        self.tab0loadPlaylistBtn = QtGui.QPushButton(self.tab0LeftWidget)
+        self.tab0LeftLayout.addWidget(self.tab0loadPlaylistBtn)
 
-        self.label = QtGui.QLabel(self.verticalLayoutWidget)
-        self.verticalLayout.addWidget(self.label)
+        self.tab0BtnHLayout = QtGui.QHBoxLayout()
+        self.tab0BtnHLayout.setSpacing(3)
+        self.tab0addPlaylistBtn = QtGui.QPushButton(self.tab0LeftWidget)
+        self.tab0BtnHLayout.addWidget(self.tab0addPlaylistBtn)
+        self.tab0deletePlaylistBtn = QtGui.QPushButton(self.tab0LeftWidget)
+        self.tab0BtnHLayout.addWidget(self.tab0deletePlaylistBtn)
 
-        self.userPlaylistsList0 = QtGui.QListWidget(self.verticalLayoutWidget)
-        self.verticalLayout.addWidget(self.userPlaylistsList0)
-
-        self.loadPlaylistBtn = QtGui.QPushButton(self.verticalLayoutWidget)
-        self.verticalLayout.addWidget(self.loadPlaylistBtn)
-
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setSpacing(3)
-        self.horizontalLayout.setContentsMargins(0, -1, -1, -1)
-
-        self.addPlaylistBtn0 = QtGui.QPushButton(self.verticalLayoutWidget)
-        self.horizontalLayout.addWidget(self.addPlaylistBtn0)
-
-        self.deletePlaylistBtn = QtGui.QPushButton(self.verticalLayoutWidget)
-        self.deletePlaylistBtn.setMaximumSize(QtCore.QSize(90, 90))
-        self.horizontalLayout.addWidget(self.deletePlaylistBtn)
-
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
-        ###Tab 0 buttons grid
-        self.deleteFromPlaylistBtn1 = QtGui.QPushButton(self.tab0GridWidget)
-        self.deleteFromPlaylistBtn1.setObjectName("deleteFromPlaylistBtn1")
-        self.tab0GridLayout.addWidget(self.deleteFromPlaylistBtn1, 1, 2, 1, 1)
-
-        self.deleteFromPlaylistBtn4 = QtGui.QPushButton(self.tab0GridWidget)
-        self.deleteFromPlaylistBtn4.setObjectName("deleteFromPlaylistBtn4")
-        self.tab0GridLayout.addWidget(self.deleteFromPlaylistBtn4, 4, 2, 1, 1)
-
-        self.deleteFromPlaylistBtn2 = QtGui.QPushButton(self.tab0GridWidget)
-        self.deleteFromPlaylistBtn2.setObjectName("deleteFromPlaylistBtn2")
-        self.tab0GridLayout.addWidget(self.deleteFromPlaylistBtn2, 2, 2, 1, 1)
-
-        self.deleteFromPlaylistBtn3 = QtGui.QPushButton(self.tab0GridWidget)
-        self.deleteFromPlaylistBtn3.setObjectName("deleteFromPlaylistBtn3")
-        self.tab0GridLayout.addWidget(self.deleteFromPlaylistBtn3, 3, 2, 1, 1)
-
-        self.deleteFromPlaylistBtn0 = QtGui.QPushButton(self.tab0GridWidget)
-        self.deleteFromPlaylistBtn0.setObjectName("deleteFromPlaylistBtn0")
-        self.tab0GridLayout.addWidget(self.deleteFromPlaylistBtn0, 0, 2, 1, 1)
-
-        self.deleteFromPlaylistBtn5 = QtGui.QPushButton(self.tab0GridWidget)
-        self.deleteFromPlaylistBtn5.setObjectName("deleteFromPlaylistBtn5")
-        self.tab0GridLayout.addWidget(self.deleteFromPlaylistBtn5, 5, 2, 1, 1)
-
-        self.playlistVideoPreviewBtn0 = QtGui.QPushButton(self.tab0GridWidget)
-        self.tab0GridLayout.addWidget(self.playlistVideoPreviewBtn0, 0, 1, 1, 1)
-
-        self.playlistVideoPreviewBtn1 = QtGui.QPushButton(self.tab0GridWidget)
-        self.tab0GridLayout.addWidget(self.playlistVideoPreviewBtn1, 1, 1, 1, 1)
-
-        self.playlistVideoPreviewBtn2 = QtGui.QPushButton(self.tab0GridWidget)
-        self.tab0GridLayout.addWidget(self.playlistVideoPreviewBtn2, 2, 1, 1, 1)
-
-        self.playlistVideoPreviewBtn3 = QtGui.QPushButton(self.tab0GridWidget)
-        self.tab0GridLayout.addWidget(self.playlistVideoPreviewBtn3, 3, 1, 1, 1)
-
-        self.playlistVideoPreviewBtn4 = QtGui.QPushButton(self.tab0GridWidget)
-        self.tab0GridLayout.addWidget(self.playlistVideoPreviewBtn4, 4, 1, 1, 1)
-
-        self.playlistVideoPreviewBtn5 = QtGui.QPushButton(self.tab0GridWidget)
-        self.tab0GridLayout.addWidget(self.playlistVideoPreviewBtn5, 5, 1, 1, 1)
+        self.tab0LeftLayout.addLayout(self.tab0BtnHLayout)
 
         ###Tab 0 arrows
-        self.horizontalLayoutWidget_2 = QtGui.QWidget(self.tab)
-        self.tab0Layout.addWidget(self.horizontalLayoutWidget_2, BorderLayout.South)
-        #self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(610, 560, 232, 31))
-        self.horizontalLayout_4 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.tab0ArrowsWidget = QtGui.QWidget(self.tab)
+        self.tab0Layout.addWidget(self.tab0ArrowsWidget, BorderLayout.South)
+        self.tab0ArrowsLayout = QtGui.QHBoxLayout(self.tab0ArrowsWidget)
+        self.tab0ArrowsLayout.setContentsMargins(500, 0, 0, 0)
 
-        self.pagesLabel0 = QtGui.QLabel(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_4.addWidget(self.pagesLabel0)
-
-        self.previousPageBtn0 = QtGui.QPushButton(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_4.addWidget(self.previousPageBtn0)
-
-        self.nextPageBtn0 = QtGui.QPushButton(self.horizontalLayoutWidget_2)
-
-        self.horizontalLayout_4.addWidget(self.nextPageBtn0)
+        self.tab0pagesLabel = QtGui.QLabel(self.tab0ArrowsWidget)
+        self.tab0ArrowsLayout.addWidget(self.tab0pagesLabel)
+        self.tab0previousPageBtn = QtGui.QPushButton(self.tab0ArrowsWidget)
+        self.tab0ArrowsLayout.addWidget(self.tab0previousPageBtn)
+        self.tab0nextPageBtn = QtGui.QPushButton(self.tab0ArrowsWidget)
+        self.tab0ArrowsLayout.addWidget(self.tab0nextPageBtn)
 
         self.tabWidget.addTab(self.tab, "")
 
@@ -321,8 +217,8 @@ class Ui_MainWindow(object):
         #self.verticalLayout_3.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
 
-        self.label_8 = QtGui.QLabel(self.verticalLayoutWidget_3)
-        self.verticalLayout_3.addWidget(self.label_8)
+        self.tab1yourPlaylistsLabel = QtGui.QLabel(self.verticalLayoutWidget_3)
+        self.verticalLayout_3.addWidget(self.tab1yourPlaylistsLabel)
 
         self.userPlaylistsList1 = QtGui.QListWidget(self.verticalLayoutWidget_3)
         self.verticalLayout_3.addWidget(self.userPlaylistsList1)
@@ -419,44 +315,17 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL("triggered()"), MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def heightForWidth(self, width):
-        return width * 1.5
-
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "AnimeSTProvider", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MainWindow", "Your playlists:", None, QtGui.QApplication.UnicodeUTF8))
-        self.loadPlaylistBtn.setText(QtGui.QApplication.translate("MainWindow", "Load playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addPlaylistBtn0.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
-        self.deletePlaylistBtn.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteFromPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "Delete from playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteFromPlaylistBtn4.setText(QtGui.QApplication.translate("MainWindow", "Delete from playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteFromPlaylistBtn2.setText(QtGui.QApplication.translate("MainWindow", "Delete from playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteFromPlaylistBtn3.setText(QtGui.QApplication.translate("MainWindow", "Delete from playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteFromPlaylistBtn0.setText(QtGui.QApplication.translate("MainWindow", "Delete from playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.deleteFromPlaylistBtn5.setText(QtGui.QApplication.translate("MainWindow", "Delete from playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.playlistVideoPreviewBtn0.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.playlistVideoPreviewBtn1.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.playlistVideoPreviewBtn2.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.playlistVideoPreviewBtn3.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.playlistVideoPreviewBtn4.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.playlistVideoPreviewBtn5.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.pagesLabel0.setText(QtGui.QApplication.translate("MainWindow", "0/0", None, QtGui.QApplication.UnicodeUTF8))
-        self.previousPageBtn0.setText(QtGui.QApplication.translate("MainWindow", "<---", None, QtGui.QApplication.UnicodeUTF8))
-        self.nextPageBtn0.setText(QtGui.QApplication.translate("MainWindow", "--->", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0yourPlaylistsLabel.setText(QtGui.QApplication.translate("MainWindow", "Your playlists:", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0loadPlaylistBtn.setText(QtGui.QApplication.translate("MainWindow", "Load playlist", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0addPlaylistBtn.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0deletePlaylistBtn.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0pagesLabel.setText(QtGui.QApplication.translate("MainWindow", "0/0", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0previousPageBtn.setText(QtGui.QApplication.translate("MainWindow", "<---", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab0nextPageBtn.setText(QtGui.QApplication.translate("MainWindow", "--->", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Playlist management", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn3.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn4.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn0.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn5.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.addToPlaylistBtn2.setText(QtGui.QApplication.translate("MainWindow", "Add to playlist", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn0.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn1.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn2.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn3.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn4.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.videoPreviewBtn5.setText(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Your playlists:", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab1yourPlaylistsLabel.setText(QtGui.QApplication.translate("MainWindow", "Your playlists:", None, QtGui.QApplication.UnicodeUTF8))
         self.addPlaylistBtn1.setText(QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setText(QtGui.QApplication.translate("MainWindow", "Found animes:", None, QtGui.QApplication.UnicodeUTF8))
         self.addAnimeBtn.setToolTip(QtGui.QApplication.translate("MainWindow", "Add anime to this list", None, QtGui.QApplication.UnicodeUTF8))
@@ -477,18 +346,23 @@ class Ui_MainWindow(object):
         self.actionAbout.setText(QtGui.QApplication.translate("MainWindow", "About AnimeSTProvider", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad_JSON_auth_file.setText(QtGui.QApplication.translate("MainWindow", "Load JSON auth file", None, QtGui.QApplication.UnicodeUTF8))
 
-class QGraphicsView(QtGui.QGraphicsView):
+class VideoItem(QtGui.QWidget):
     def __init__(self, parent = None):
-        QtGui.QGraphicsView.__init__(self, parent)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-        #sizePolicy.setHeightForWidth(True)
-        self.setSizePolicy(sizePolicy)
-
-    def heightForWidth(self, width):
-        return width * 9 / 16
-
-    def sizeHint(self):
-        return QtCore.QSize(240, 120)
+        QtGui.QWidget.__init__(self, parent)
+        self.setContent()
+    def setContent(self):
+        self.layout = QtGui.QHBoxLayout(self)
+        self.videoView = QtGui.QGraphicsView(self)
+        self.videoView.setMaximumSize(112, 63)
+        self.layout.addWidget(self.videoView)
+        self.label = QtGui.QLabel(self)
+        self.label.setText("")
+        #self.videoLabel1.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.layout.addWidget(self.label)
+        self.deleteBtn = QtGui.QPushButton(self)
+        self.layout.addWidget(self.deleteBtn)
+        self.previewBtn = QtGui.QPushButton(self)
+        self.layout.addWidget(self.previewBtn)
 
 class BorderLayout(QtGui.QLayout):
     West, North, South, East, Center = range(5)
