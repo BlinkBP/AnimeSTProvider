@@ -199,10 +199,8 @@ class Ui_MainWindow(object):
         self.actionLoad_JSON_auth_file.setText(QtGui.QApplication.translate("MainWindow", "Load JSON auth file", None, QtGui.QApplication.UnicodeUTF8))
 
 class VideoItem(QtGui.QWidget):
-    def __init__(self, parent = None):
+    def __init__(self, parent = None, video):
         QtGui.QWidget.__init__(self, parent)
-        self.setContent()
-    def setContent(self):
         self.layout = QtGui.QHBoxLayout(self)
         self.videoView = QtGui.QGraphicsView(self)
         self.videoView.setMaximumSize(112, 63)
@@ -215,7 +213,23 @@ class VideoItem(QtGui.QWidget):
         self.layout.addWidget(self.deleteBtn)
         self.previewBtn = QtGui.QPushButton(self)
         self.layout.addWidget(self.previewBtn)
+        self.videoID = video[2]
+        self.videoURL = video[3]
+        self.setContent(video)
 
+    def setContent(self, video):
+        #videos entry is [title, thumb_url, id, url]
+        self.setLabel(video[0])
+        self.setThumbnail(video[1])
+
+    def setLabel(self, text):
+        self.label.setText(text)
+
+    def setThumbnail(self, thumb_url)
+        data = requests.get(thumb_url).content
+        thumb = QImage().loadFromData(data)
+        #TODO: Set QGraphicsView scene and view
+        
 class BorderLayout(QtGui.QLayout):
     West, North, South, East, Center = range(5)
     MinimumSize, SizeHint = range(2)
