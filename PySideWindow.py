@@ -11,6 +11,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from PySide.QtWebKit import QWebView, QWebSettings
 from AnimeSTProviderUI import Ui_MainWindow
+import AnimeSTProviderUI as Ui
 from io import BytesIO
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -22,6 +23,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connectEvents()
         self.setWindowIcon(QIcon("assets/icon.png"))
         self.loggedIn = False
+        self.ytProvider = YouTubeProvider()
         
     def connectButtons(self):
         self.closeBtn = QPushButton()
@@ -49,16 +51,20 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def load_playlist(self):
         if (self.loggedIn):
-            self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds, self.playlistVideoUrlIds	= YouTubeProvider.load_playlist(
-                self.playlistIds[self.currentPlaylistRow]
-                )
-            self.fill_thumbnails(self.playlistVideoThumbnails, "playlist")
-            self.fill_labels(self.playlistVideoTitles, "playlist")
-            self.update_page_label("playlist")
+            #videos entry is [title, thumb_url, id, url]
+            self.videos = YouTubeProvider.load_playlist(
+                self.playlistIds[self.currentPlaylistRow])
+            self.loadVideosList()
             self.statusBar().showMessage('Playlist loaded!')
         else:
             self.showError("You must log in first!")
 
+    def loadVideosList(self):
+        if (self.tab.currentIndex = 0):
+            container = self.tab0RightContainerWidget.layout()
+            for video in videos:
+                container.addWidget(Ui.VideoItem(video))
+        
     def initialize_preview(self):
         self.previewWindow.setWindowFlags(Qt.FramelessWindowHint)
         self.previewWindow.setWindowTitle("Preview")
@@ -104,84 +110,9 @@ class Window(QMainWindow, Ui_MainWindow):
             maxIndex = 6
         else:
             maxIndex = len(titles)
-
-
         for i in range(0, maxIndex):
             labels[i].setText(titles[i])
-
-    def update_page_label(self, tab):
-        if tab == "anime":
-            pagesLabel = self.pagesLabel1
-            currentPage = self.currentVideoPage
-            totalPages = self.totalVideoPages
-        elif tab == "playlist":
-            pagesLabel = self.pagesLabel0
-            currentPage = self.currentPlaylistPage
-            totalPages = self.totalPlaylistPages
-
-        pagesLabel.setText("{}/{}".format(currentPage + 1, totalPages + 1)) # pages' variables start with 0 so we are adding one to them
-
-    def nextPage(self):
-        senderId = self.sender().objectName()[-1:]
-
-        # Throughout the program '0' most often means that the widget is on playlist management tab and '1' means it is on YT search tab
-        if senderId == "1":
-            # First we change the page number
-            self.currentVideoPage += 1
-            # Then we use this number to figure out an index number to use with arrays
-            index = self.currentVideoPage * 6
-            if self.currentVideoPage <= self.totalVideoPages:
-                tab = "anime"
-                self.clear_thumbnails(tab)
-                self.clear_labels(tab)
-                self.fill_thumbnails(self.videoThumbnails[index:], tab)
-                self.fill_labels(self.videoTitles[index:], tab)
-                self.update_page_label(tab)
-            else:
-                self.currentVideoPage -= 1
-
-        elif senderId == "0":
-            self.currentPlaylistPage += 1
-            index = self.currentPlaylistPage * 6
-            if self.currentPlaylistPage <= self.totalPlaylistPages:
-                tab = "playlist"
-                self.clear_thumbnails(tab)
-                self.clear_labels(tab)
-                self.fill_thumbnails(self.playlistVideoThumbnails[index:], tab)
-                self.fill_labels(self.playlistVideoTitles[index:], tab)
-                self.update_page_label(tab)
-            else:
-                self.currentPlaylistPage -= 1
-
-    def previousPage(self):
-        senderId = self.sender().objectName()[-1:]
-
-        if senderId == "1":
-            self.currentVideoPage -= 1
-            index = self.currentVideoPage * 6
-            if self.currentVideoPage >= 0:
-                tab = "anime"
-                self.clear_thumbnails(tab)
-                self.clear_labels(tab)
-                self.fill_thumbnails(self.videoThumbnails[index:], tab)
-                self.fill_labels(self.videoTitles[index:], tab)
-                self.update_page_label(tab)
-            else:
-                self.currentVideoPage += 1
-
-        elif senderId == "0":
-            self.currentPlaylistPage -= 1
-            index = self.currentPlaylistPage * 6
-            if self.currentPlaylistPage >= 0:
-                tab = "playlist"
-                self.clear_thumbnails(tab)
-                self.clear_labels(tab)
-                self.fill_thumbnails(self.playlistVideoThumbnails[index:], tab)
-                self.fill_labels(self.playlistVideoTitles[index:], tab)
-                self.update_page_label(tab)
-            else:
-                self.currentPlaylistPage += 1
-
+            
     def open_HTML(self):
         fname, str = QFileDialog.getOpenFileName(self, 'Open file', '/home/Desktop', "Files (*.html)")
         if fname != '':
