@@ -17,60 +17,23 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        # #Arrays
-        # self.animeScenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
-        #         QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
-        # self.videoScenes = [QGraphicsScene(), QGraphicsScene(), QGraphicsScene(),
-        #         QGraphicsScene(), QGraphicsScene(), QGraphicsScene()]
-        # self.animeViews = [self.animeView0, self.animeView1, self.animeView2,
-        #         self.animeView3, self.animeView4, self.animeView5]
-        # self.videoViews = [self.videoView0, self.videoView1, self.videoView2,
-        #         self.videoView3, self.videoView4, self.videoView5]
-        # self.animeLabels = [self.animeLabel0, self.animeLabel1, self.animeLabel2,
-        #         self.animeLabel3, self.animeLabel4, self.animeLabel5]
-        # self.videoLabels = [self.videoLabel0, self.videoLabel1, self.videoLabel2,
-        #         self.videoLabel3, self.videoLabel4, self.videoLabel5]
         # # Menu
         # self.actionOpen_HTML.triggered.connect(self.open_HTML)
         # self.actionAbout.triggered.connect(self.show_about)
         # self.actionLoad_JSON_auth_file.triggered.connect(self.log_in)
         # # Buttons
         # self.closeBtn = QPushButton()
-        # self.deleteAnimeBtn.clicked.connect(self.delete_anime)
-        # self.addAnimeBtn.clicked.connect(self.add_anime)
-        # self.searchYTBtn.clicked.connect(self.search)
-        # self.addPlaylistBtn0.clicked.connect(self.create_playlist)
-        # self.addPlaylistBtn1.clicked.connect(self.create_playlist)
-        # self.deletePlaylistBtn.clicked.connect(self.delete_playlist)
-        # self.loadPlaylistBtn.clicked.connect(self.load_playlist)
-        # self.videoPreviewBtn0.clicked.connect(self.preview)
-        # self.videoPreviewBtn1.clicked.connect(self.preview)
-        # self.videoPreviewBtn2.clicked.connect(self.preview)
-        # self.videoPreviewBtn3.clicked.connect(self.preview)
-        # self.videoPreviewBtn4.clicked.connect(self.preview)
-        # self.videoPreviewBtn5.clicked.connect(self.preview)
-        # self.playlistVideoPreviewBtn0.clicked.connect(self.preview)
-        # self.playlistVideoPreviewBtn1.clicked.connect(self.preview)
-        # self.playlistVideoPreviewBtn2.clicked.connect(self.preview)
-        # self.playlistVideoPreviewBtn3.clicked.connect(self.preview)
-        # self.playlistVideoPreviewBtn4.clicked.connect(self.preview)
-        # self.playlistVideoPreviewBtn5.clicked.connect(self.preview)
-        # self.addToPlaylistBtn0.clicked.connect(self.add_video_to_playlist)
-        # self.addToPlaylistBtn1.clicked.connect(self.add_video_to_playlist)
-        # self.addToPlaylistBtn2.clicked.connect(self.add_video_to_playlist)
-        # self.addToPlaylistBtn3.clicked.connect(self.add_video_to_playlist)
-        # self.addToPlaylistBtn4.clicked.connect(self.add_video_to_playlist)
-        # self.addToPlaylistBtn5.clicked.connect(self.add_video_to_playlist)
-        # self.deleteFromPlaylistBtn0.clicked.connect(self.delete_video_from_playlist)
-        # self.deleteFromPlaylistBtn1.clicked.connect(self.delete_video_from_playlist)
-        # self.deleteFromPlaylistBtn2.clicked.connect(self.delete_video_from_playlist)
-        # self.deleteFromPlaylistBtn3.clicked.connect(self.delete_video_from_playlist)
-        # self.deleteFromPlaylistBtn4.clicked.connect(self.delete_video_from_playlist)
-        # self.deleteFromPlaylistBtn5.clicked.connect(self.delete_video_from_playlist)
-        # self.nextPageBtn0.clicked.connect(self.nextPage)
-        # self.nextPageBtn1.clicked.connect(self.nextPage)
-        # self.previousPageBtn0.clicked.connect(self.previousPage)
-        # self.previousPageBtn1.clicked.connect(self.previousPage)
+        # self.tab1deleteAnimeBtn.clicked.connect(self.delete_anime)
+        # self.tab1addAnimeBtn.clicked.connect(self.add_anime)
+        # self.tab1searchYTBtn.clicked.connect(self.search)
+        # self.tab0addPlaylistBtn.clicked.connect(self.create_playlist)
+        # self.tab1addPlaylistBtn.clicked.connect(self.create_playlist)
+        # self.tab0deletePlaylistBtn.clicked.connect(self.delete_playlist)
+        # self.tab0loadPlaylistBtn.clicked.connect(self.load_playlist)
+        # self.tab0nextPageBtn.clicked.connect(self.nextPage)
+        # self.tab1nextPageBtn.clicked.connect(self.nextPage)
+        # self.tab0previousPageBtn.clicked.connect(self.previousPage)
+        # self.tab1previousPageBtn.clicked.connect(self.previousPage)
         # self.closeBtn.clicked.connect(self.destroy_preview)
         # #Variables
         # self.playlistIds = []
@@ -89,9 +52,9 @@ class Window(QMainWindow, Ui_MainWindow):
         # self.currentVideoPage = 0
         # self.currentPlaylistPage = 0
         # #Events
-        # self.userPlaylistsList0.itemClicked.connect(self.on_playlist_row_changed)
-        # self.userPlaylistsList1.itemClicked.connect(self.on_playlist_row_changed)
-        # self.animeListWidget.itemClicked.connect(self.on_anime_row_changed)
+        # self.tab0userPlaylistsList.itemClicked.connect(self.on_playlist_row_changed)
+        # self.tab1userPlaylistsList.itemClicked.connect(self.on_playlist_row_changed)
+        # self.tab1animesList.itemClicked.connect(self.on_anime_row_changed)
         # #Icons
         # self.icon = QIcon("assets/icon.png")
         # #Misc
@@ -99,21 +62,10 @@ class Window(QMainWindow, Ui_MainWindow):
         # self.webView = QWebView()
         #
         # self.setWindowIcon(self.icon)
-        # self.initialize_thumbnails()
-        # self.initialize_preview()
-
-    def initialize_thumbnails(self):
-
-        for i in range(0, 6):
-            self.animeViews[i].setScene(self.animeScenes[i])
-            self.videoViews[i].setScene(self.videoScenes[i])
-            self.animeScenes[i].clear()
-            self.videoScenes[i].clear()
 
     def initialize_preview(self):
-
         self.previewWindow.setWindowFlags(Qt.FramelessWindowHint)
-        self.previewWindow.setFixedSize(685,470)
+        #self.previewWindow.setFixedSize(685,470)
         self.previewWindow.setWindowTitle("Preview")
         self.layout = QVBoxLayout()
         self.previewWindow.setLayout(self.layout)
@@ -122,30 +74,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.layout.addWidget(self.webView)
         self.layout.addWidget(self.closeBtn)
 
-    def clear_labels(self, tab):
-
-       if tab == "anime":
-            labels = self.animeLabels
-            for i in range(0, 6):
-                labels[i].setText("")
-       elif tab == "playlist":
-            labels = self.videoLabels
-            for i in range(0, 6):
-                labels[i].setText("")
-
-    def clear_thumbnails(self, tab):
-
-        if tab == "anime":
-            for i in range(0, 6):
-                self.animeScenes[i].clear()
-                self.animeScenes[i].update()
-        elif tab == "playlist":
-            for i in range(0, 6):
-                self.videoScenes[i].clear()
-                self.videoScenes[i].update()
-
     def fill_thumbnails(self, thumbnails, tab):
-
         if tab == "anime":
             views = self.animeViews
             scenes = self.animeScenes
@@ -169,7 +98,6 @@ class Window(QMainWindow, Ui_MainWindow):
             scenes[i].update()
 
     def fill_labels(self, titles, tab):
-
         if tab == "anime":
             labels = self.animeLabels
         elif tab == "playlist":
@@ -187,7 +115,6 @@ class Window(QMainWindow, Ui_MainWindow):
             labels[i].setText(titles[i])
 
     def update_page_label(self, tab):
-
         if tab == "anime":
             pagesLabel = self.pagesLabel1
             currentPage = self.currentVideoPage
@@ -200,7 +127,6 @@ class Window(QMainWindow, Ui_MainWindow):
         pagesLabel.setText("{}/{}".format(currentPage + 1, totalPages + 1)) # pages' variables start with 0 so we are adding one to them
 
     def nextPage(self):
-
         senderId = self.sender().objectName()[-1:]
 
         # Throughout the program '0' most often means that the widget is on playlist management tab and '1' means it is on YT search tab
@@ -233,7 +159,6 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.currentPlaylistPage -= 1
 
     def previousPage(self):
-
         senderId = self.sender().objectName()[-1:]
 
         if senderId == "1":
@@ -263,7 +188,6 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.currentPlaylistPage += 1
 
     def open_HTML(self):
-
         fname, str = QFileDialog.getOpenFileName(self, 'Open file', '/home/Desktop', "Files (*.html)")
         if fname != '':
             animeNames = AnimeProvider.get_anime_from_file(fname)
@@ -272,9 +196,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.statusBar().showMessage('File successfully loaded from HTML!')
 
     def list_playlists(self):
-
-        self.userPlaylistsList0.clear()
-        self.userPlaylistsList1.clear()
+        self.tab0userPlaylistsList.clear()
+        self.tab1userPlaylistsList.clear()
 
         titles, self.playlistIds = YouTubeProvider.get_user_playlists()
 
@@ -283,7 +206,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.userPlaylistsList1.addItem(title)
 
     def create_playlist(self):
-
         if YouTubeProvider.login is not None:
             name, ok = QInputDialog.getText(self, 'Add playlist', 'Enter playlist name: ')
 
@@ -292,14 +214,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.userPlaylistsList0.addItem(name)
                 self.userPlaylistsList1.addItem(name)
         else:
-            self.message = QMessageBox()
-            self.message.setWindowTitle("Error")
-            self.message.setText("You must log in first.")
-            self.message.setDefaultButton(QMessageBox.Ok)
-            self.message.open()
-
+            self.showError("You must log in first!")
+            
     def delete_playlist(self):
-
         if self.userPlaylistsList0.item(self.currentPlaylistRow) is not None:
             reply = QMessageBox.question(self, 'Are you sure?', "Are you sure?",
                 QMessageBox.Yes,
@@ -318,7 +235,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.message.open()
 
     def add_video_to_playlist(self):
-
         if len(self.videoIds) > 0:
             # buttons' names end in a number from 0 to 5 then we can use that number as an index for array
             senderId = self.sender().objectName()[-1:]
@@ -338,7 +254,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.load_playlist()
 
     def log_in(self):
-
         json, str = QFileDialog.getOpenFileName(self, 'Open JSON file', '/home/Desktop', "Files (*.JSON)")
         if json != '':
             GoogleLogin.json_log_in(json)
@@ -346,25 +261,20 @@ class Window(QMainWindow, Ui_MainWindow):
             self.list_playlists()
 
     def delete_anime(self):
-
         self.animeListWidget.takeItem(self.animeListWidget.currentRow())
 
     def add_anime(self):
-
         title, ok = QInputDialog.getText(self, 'Add anime', 'Enter anime title:')
-
         if ok:
             self.animeListWidget.addItem(title)
 
     def count_pages(self, videos, tab):
-
         if tab == "anime":
             self.totalVideoPages = round(len(videos) / 6)
         elif tab == "playlist":
             self.totalPlaylistPages = round(len(videos) / 6)
 
     def load_playlist(self):
-
         if len(self.playlistIds) > 0:
             self.playlistVideoTitles, self.playlistVideoThumbnails, self.playlistVideoIds, self.playlistVideoUrlIds	= YouTubeProvider.load_playlist(
                 self.playlistIds[self.currentPlaylistRow]
@@ -377,11 +287,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.update_page_label("playlist")
             self.statusBar().showMessage('Playlist loaded!')
         else:
-            self.message = QMessageBox()
-            self.message.setWindowTitle("Error")
-            self.message.setText("You must log in first or this playlist has no videos.")
-            self.message.setDefaultButton(QMessageBox.Ok)
-            self.message.open()
+            self.showError("You must log in first or this playlist has no videos.")
 
     def search(self):
 
@@ -399,17 +305,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.update_page_label("anime")
                 self.statusBar().showMessage('Search done!')
             else:
-                self.message = QMessageBox()
-                self.message.setWindowTitle("Error")
-                self.message.setText("You must log in first.")
-                self.message.setDefaultButton(QMessageBox.Ok)
-                self.message.open()
+                self.showError("You must log in first!")
         else:
-            self.message = QMessageBox()
-            self.message.setWindowTitle("Error")
-            self.message.setText("You must choose anime title first.")
-            self.message.setDefaultButton(QMessageBox.Ok)
-            self.message.open()
+            self.showError("You must choose an anime first!")
 
     def preview(self):
 
@@ -457,6 +355,14 @@ class Window(QMainWindow, Ui_MainWindow):
                 )
             )
 
+    def showError(text):
+        self.message = QMessageBox()
+        self.message.setWindowTitle("Error")
+        self.message.setText(text)
+        self.message.setDefaultButton(QMessageBox.Ok)
+        self.message.open()
+
+        
     def on_playlist_row_changed(self, item):
 
         if self.sender().objectName() == "userPlaylistsList0":
