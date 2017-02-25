@@ -2,20 +2,13 @@ from PySide import QtCore, QtGui
 
 class Ui_MainWindow(object):
 
-    def onResize(self, newSize):
-        pass
-        #self.tabWidget.resize(self.centralWidget.size())
-        #self.centralWidget.resize(self.MW.size())
-
     def setupUi(self, MainWindow):
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
         ### Main Window
-        #MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QtCore.QSize(640, 640))
+        MainWindow.setMinimumSize(QtCore.QSize(900, 650))
         self.MW = MainWindow
-        MainWindow.resizeEvent = self.onResize
 
         ### Central Widget
         self.centralwidget = QtGui.QWidget(MainWindow)
@@ -25,16 +18,15 @@ class Ui_MainWindow(object):
         ### Main tabWidget
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(MainWindow.geometry())
-        self.tabWidget.setSizePolicy(sizePolicy)
+        #self.tabWidget.setSizePolicy(sizePolicy)
         #self.tabWidget.setMinimumSize(QtCore.QSize(600,450))
 
         ### Vertical Layout - Playlist Management - Playlists list
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        #sizePolicy.setHorizontalStretch(0)
+        #sizePolicy.setVerticalStretch(0)
         ### Main Window
         #MainWindow.resize(600, 450)
-        MainWindow.setSizePolicy(sizePolicy)
-        #MainWindow.setMinimumSize(QtCore.QSize(900, 650))
+        #MainWindow.setSizePolicy(sizePolicy)
 
         ### Central Widget
         self.centralwidget = QtGui.QWidget(MainWindow)
@@ -229,7 +221,7 @@ class VideoItem(QtGui.QWidget):
         data = requests.get(thumb_url).content
         thumb = QImage().loadFromData(data)
         #TODO: Set QGraphicsView scene and view
-        
+
 class BorderLayout(QtGui.QLayout):
     West, North, South, East, Center = range(5)
     MinimumSize, SizeHint = range(2)
