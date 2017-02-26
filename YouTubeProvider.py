@@ -1,11 +1,12 @@
 import __main__ as main
 
-class YouTubeProvider():
-    login = None
+class YTProvider():
+    def __init__(self):
+        self.login = None
 
     def youtube_search(self, keywords, addStr):
-        if (login != None):
-            youtube = login
+        if (self.login != None):
+            youtube = self.login
             searchResponse = youtube.search().list(
                 q="{} {}".format(keywords, addStr),
                 part="id, snippet",
@@ -19,14 +20,14 @@ class YouTubeProvider():
                         [video["snippet"]["title"],
                          video["snippet"]["thumbnails"]["medium"]["url"],
                          video["id"],
-                         video["snippet"]["resourceId"]["videoId"]]))
+                         video["snippet"]["resourceId"]["videoId"]])
             return videos
         else:
             main.window.showError("You are not logged in!")
-            
+
     def get_user_playlists(self):
-        if login != None:
-            youtube = login
+        if self.login != None:
+            youtube = self.login
             playlistsList = youtube.playlists().list(
                 part="snippet",
                 mine=True
@@ -35,15 +36,15 @@ class YouTubeProvider():
             playlists = []
             for playlist in playlistsList.get("items", []):
                 playlists.append(
-                    playlist["snippet"]["localized"]["title"],
+                    [playlist["snippet"]["localized"]["title"],
                     playlist["id"]])
             return playlists
-    else:
-        main.window.showError("You are not logged in!")
+        else:
+            main.window.showError("You are not logged in!")
 
     def load_playlist(self, id):
-        if login != None:
-            youtube = login
+        if self.login != None:
+            youtube = self.login
             playlistItems = youtube.playlistItems().list(
                 part="snippet, id",
                 playlistId=id,
@@ -60,10 +61,10 @@ class YouTubeProvider():
             return videos
         else:
             main.window.showError("You are not logged in!")
-        
+
     def create_playlist(self, name):
-        if login != None:
-            youtube = login
+        if self.login != None:
+            youtube = self.login
             youtube.playlists().insert(
                 part="snippet, status",
                 body=dict(
@@ -77,17 +78,17 @@ class YouTubeProvider():
             ).execute()
         else:
             main.window.showError("You are not logged in!")
-            
+
     def delete_playlist(self, playlistId):
-        if login != None:
-            youtube = login
+        if self.login != None:
+            youtube = self.login
             youtube.playlists().delete(id=playlistId).execute()
         else:
             main.window.showError("You are not logged in!")
 
-    def add_to_playlist(self, vidId, playId):    
-        if login != None:
-            youtube = login
+    def add_to_playlist(self, vidId, playId):
+        if self.login != None:
+            youtube = self.login
             struct = {
                 'snippet':{
                     'resourceId': vidId,
@@ -100,17 +101,17 @@ class YouTubeProvider():
             ).execute()
         else:
             main.window.showError("You are not logged in!")
-            
+
     def delete_from_playlist(self, ID):
-        if login != None:
-            youtube = login
+        if self.login != None:
+            youtube = self.login
             youtube.playlistItems().delete(id=ID).execute()
         else:
             main.window.showError("You are not logged in!")
-        
+
     def delete_playlist(self, playlistId):
-        if login != None:
-            youtube = login
+        if self.login != None:
+            youtube = self.login
             youtube.playlists().delete(id=playlistId).execute()
         else:
             main.window.showError("You are not logged in!")
