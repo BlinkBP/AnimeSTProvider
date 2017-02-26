@@ -1,8 +1,8 @@
 import __main__ as main
 
 class YTProvider():
-    def __init__(self):
-        self.login = None
+    def __init__(self, login):
+        self.login = login
 
     def youtube_search(self, keywords, addStr):
         if (self.login != None):
@@ -36,8 +36,8 @@ class YTProvider():
             playlists = []
             for playlist in playlistsList.get("items", []):
                 playlists.append(
-                    [playlist["snippet"]["localized"]["title"],
-                    playlist["id"]])
+                    Playlist(playlist["snippet"]["localized"]["title"],
+                    playlist["id"]))
             return playlists
         else:
             main.window.showError("You are not logged in!")
@@ -54,10 +54,10 @@ class YTProvider():
             videos = []
             for video in playlistItems.get("items", []):
                 videos.append(
-                    [video["snippet"]["title"],
+                    Video(video["snippet"]["title"],
                      video["snippet"]["thumbnails"]["medium"]["url"],
                      video["id"],
-                     video["snippet"]["resourceId"]["videoId"]])
+                     video["snippet"]["resourceId"]["videoId"]))
             return videos
         else:
             main.window.showError("You are not logged in!")
@@ -115,3 +115,15 @@ class YTProvider():
             youtube.playlists().delete(id=playlistId).execute()
         else:
             main.window.showError("You are not logged in!")
+
+class Playlist():
+    def __init__(self, title, id):
+        self.title = title
+        self.id = id
+
+class Video():
+    def __init__(self, title, thumbUrl, id, videoId):
+        self.title = title
+        self.thumbUrl = thumbUrl
+        self.id = id
+        self.videoId = videoId

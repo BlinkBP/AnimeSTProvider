@@ -1,4 +1,5 @@
 from PySide import QtCore, QtGui
+from YouTubeProvider import Video
 import requests
 
 class Ui_MainWindow(object):
@@ -127,7 +128,7 @@ class Ui_MainWindow(object):
         self.tab1LeftLayout.addWidget(self.tab1SearchYTBtn)
 
         MainWindow.setCentralWidget(self.centralwidget)
-
+        ###Menu bar/Status bar
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuAbout = QtGui.QMenu(self.menubar)
@@ -139,9 +140,9 @@ class Ui_MainWindow(object):
         self.actionOpen_HTML = QtGui.QAction(MainWindow)
         self.actionExit = QtGui.QAction(MainWindow)
         self.actionAbout = QtGui.QAction(MainWindow)
-        self.actionLoad_JSON_auth_file = QtGui.QAction(MainWindow)
+        self.actionLog_In = QtGui.QAction(MainWindow)
 
-        self.menuFile.addAction(self.actionLoad_JSON_auth_file)
+        self.menuFile.addAction(self.actionLog_In)
         self.menuFile.addAction(self.actionOpen_HTML)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
@@ -177,14 +178,13 @@ class Ui_MainWindow(object):
         self.actionOpen_HTML.setText(QtGui.QApplication.translate("MainWindow", "Open HTML", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout.setText(QtGui.QApplication.translate("MainWindow", "About AnimeSTProvider", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionLoad_JSON_auth_file.setText(QtGui.QApplication.translate("MainWindow", "Load JSON auth file", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionLog_In.setText(QtGui.QApplication.translate("MainWindow", "Log in", None, QtGui.QApplication.UnicodeUTF8))
 
 class VideoItem(QtGui.QWidget):
     def __init__(self, parent = None, video = None):
         QtGui.QWidget.__init__(self, parent)
-        #videos entry is [title, thumb_url, id, url]
-        self.videoID = video[2]
-        self.videoURL = video[3]
+        self.videoID = video.id
+        self.videoURL = video.videoId
         self.thumbW = 112
         self.thumbH = 63
         self.createWidget()
@@ -210,8 +210,8 @@ class VideoItem(QtGui.QWidget):
         self.layout.addWidget(self.previewBtn)
 
     def setContent(self, video):
-        self.setLabel(video[0])
-        self.setThumbnail(video[1])
+        self.setLabel(video.title)
+        self.setThumbnail(video.thumbUrl)
 
     def setLabel(self, text):
         self.label.setText(text)
