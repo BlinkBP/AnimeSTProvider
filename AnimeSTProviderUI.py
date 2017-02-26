@@ -1,4 +1,5 @@
 from PySide import QtCore, QtGui
+import requests
 
 class Ui_MainWindow(object):
 
@@ -13,24 +14,13 @@ class Ui_MainWindow(object):
         ### Central Widget
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setSizePolicy(sizePolicy)
-        #self.centralwidget.setMinimumSize(QtCore.QSize(600, 450))
 
         ### Main tabWidget
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(MainWindow.geometry())
-        #self.tabWidget.setSizePolicy(sizePolicy)
-        #self.tabWidget.setMinimumSize(QtCore.QSize(600,450))
-
-        ### Vertical Layout - Playlist Management - Playlists list
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        ### Main Window
-        #MainWindow.resize(600, 450)
-        #MainWindow.setSizePolicy(sizePolicy)
 
         ### Central Widget
         self.centralwidget = QtGui.QWidget(MainWindow)
-        #self.centralwidget.setSizePolicy(sizePolicy)
         self.centralLayout = QtGui.QHBoxLayout()
         self.centralwidget.setLayout(self.centralLayout)
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
@@ -139,7 +129,6 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.menubar = QtGui.QMenuBar(MainWindow)
-        #self.menubar.setGeometry(QtCore.QRect(0, 0, 1090, 21))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuAbout = QtGui.QMenu(self.menubar)
         MainWindow.setMenuBar(self.menubar)
@@ -191,36 +180,51 @@ class Ui_MainWindow(object):
         self.actionLoad_JSON_auth_file.setText(QtGui.QApplication.translate("MainWindow", "Load JSON auth file", None, QtGui.QApplication.UnicodeUTF8))
 
 class VideoItem(QtGui.QWidget):
-    def __init__(self, parent = None, video):
+    def __init__(self, parent = None, video = None):
         QtGui.QWidget.__init__(self, parent)
-        self.layout = QtGui.QHBoxLayout(self)
-        self.videoView = QtGui.QGraphicsView(self)
-        self.videoView.setMaximumSize(112, 63)
-        self.layout.addWidget(self.videoView)
-        self.label = QtGui.QLabel(self)
-        self.label.setText("")
-        #self.videoLabel1.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.layout.addWidget(self.label)
-        self.deleteBtn = QtGui.QPushButton(self)
-        self.layout.addWidget(self.deleteBtn)
-        self.previewBtn = QtGui.QPushButton(self)
-        self.layout.addWidget(self.previewBtn)
+        #videos entry is [title, thumb_url, id, url]
         self.videoID = video[2]
         self.videoURL = video[3]
+        self.thumbW = 112
+        self.thumbH = 63
+        self.createWidget()
         self.setContent(video)
 
+
+    def createWidget(self):
+        self.layout = QtGui.QHBoxLayout(self)
+
+        self.videoView = QtGui.QGraphicsView(self)
+        self.videoView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.videoView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.videoView.setMaximumSize(self.thumbW, self.thumbH) #16:9
+        self.layout.addWidget(self.videoView)
+
+        self.label = QtGui.QLabel(self)
+        self.layout.addWidget(self.label)
+
+        self.btn = QtGui.QPushButton(self)
+        self.layout.addWidget(self.btn)
+
+        self.previewBtn = QtGui.QPushButton(self, "Preview")
+        self.layout.addWidget(self.previewBtn)
+
     def setContent(self, video):
-        #videos entry is [title, thumb_url, id, url]
         self.setLabel(video[0])
         self.setThumbnail(video[1])
 
     def setLabel(self, text):
         self.label.setText(text)
 
-    def setThumbnail(self, thumb_url)
+    def setThumbnail(self, thumb_url):
         data = requests.get(thumb_url).content
-        thumb = QImage().loadFromData(data)
-        #TODO: Set QGraphicsView scene and view
+        thumbImg = QtGui.QImage()
+        thumbImg.loadFromData(data)
+        thumbPix = QtGui.QPixmap()
+        thumbPix.convertFromImage(thumbImg.scaled(self.thumbW, self.thumbH))
+        self.videoScene = QtGui.QGraphicsScene()
+        self.videoScene.addPixmap(thumbPix)
+        self.videoView.setScene(self.videoScene)
 
 class BorderLayout(QtGui.QLayout):
     West, North, South, East, Center = range(5)
